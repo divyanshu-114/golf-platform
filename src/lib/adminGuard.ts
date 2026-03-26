@@ -17,7 +17,12 @@ export async function requireAdmin() {
 
   let userId: string | null = null
   try {
-    const decoded = Buffer.from(fullToken, 'base64').toString('utf-8')
+    let decoded = fullToken
+    if (fullToken.startsWith('base64-')) {
+      decoded = Buffer.from(fullToken.replace('base64-', ''), 'base64').toString('utf-8')
+    } else {
+      decoded = Buffer.from(fullToken, 'base64').toString('utf-8')
+    }
     const session = JSON.parse(decoded)
     const jwt = session?.access_token
     if (jwt) {

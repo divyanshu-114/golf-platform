@@ -23,11 +23,25 @@ export default function LoginPage() {
   const handleLogin = async () => {
     setError('')
     setLoading(true)
-    const { error } = await supabase.auth.signInWithPassword({ email, password })
+    const { data: authData, error } = await supabase.auth.signInWithPassword({ email, password })
     if (error) {
       setLoading(false)
       return setError(friendlyError(error.message))
     }
+
+    if (authData?.user) {
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('role')
+        .eq('id', authData.user.id)
+        .single()
+        
+      if (profile?.role === 'admin') {
+        window.location.href = '/admin'
+        return
+      }
+    }
+
     // Hard redirect to force a completely fresh server-side render with the brand new cookie
     window.location.href = '/dashboard'
   }

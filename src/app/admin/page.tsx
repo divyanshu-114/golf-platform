@@ -9,12 +9,12 @@ export default function AdminOverview() {
   }, [])
 
   const cards = stats ? [
-    { label: 'Total Users', value: stats.totalUsers, icon: '👥' },
-    { label: 'Active Subscribers', value: stats.activeSubscribers, icon: '✅' },
-    { label: 'Draws Published', value: stats.totalDraws, icon: '🎲' },
-    { label: 'Total Prizes Paid', value: `£${stats.totalPrizesPaid.toFixed(2)}`, icon: '💰' },
-    { label: 'Charity Pool (est.)', value: `£${stats.estimatedCharityPool}`, icon: '💚' },
-    { label: 'Avg Charity %', value: `${stats.avgCharityPct}%`, icon: '📊' },
+    { label: 'Total Users', value: stats.totalUsers || 0, icon: '👥' },
+    { label: 'Active Subscribers', value: stats.activeSubscribers || 0, icon: '✅' },
+    { label: 'Draws Published', value: stats.totalDraws || 0, icon: '🎲' },
+    { label: 'Total Prizes Paid', value: `£${(stats.totalPrizesPaid || 0).toFixed(2)}`, icon: '💰' },
+    { label: 'Charity Pool (est.)', value: `£${(stats.estimatedCharityPool || 0).toFixed(2)}`, icon: '💚' },
+    { label: 'Avg Charity %', value: `${(stats.avgCharityPct || 0).toFixed(1)}%`, icon: '📊' },
   ] : []
 
   return (
