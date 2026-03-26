@@ -149,11 +149,11 @@ export default function GolfBallScene({ variant = 'dark', className = '' }: Golf
 
     // Animation loop
     let animationId: number
-    const clock = new THREE.Clock()
+    const startTime = performance.now()
 
     const animate = () => {
       animationId = requestAnimationFrame(animate)
-      const elapsed = clock.getElapsedTime()
+      const elapsed = (performance.now() - startTime) * 0.001
 
       // Animate balls
       balls.forEach((ball, i) => {
@@ -224,3 +224,6 @@ export default function GolfBallScene({ variant = 'dark', className = '' }: Golf
     />
   )
 }
+ 
+
+
