@@ -34,3 +34,39 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## Project Structure
+
+This project uses the Next.js App Router. Here is the primary `src` directory structure:
+
+```text
+src/
+├── app
+│   ├── admin
+│   │   ├── adminSidebar.tsx
+│   │   ├── charities
+│   │   ├── draws
+│   │   ├── users
+│   │   └── winners
+│   ├── api
+│   │   ├── admin
+│   │   ├── auth
+│   │   ├── charities
+│   │   ├── dashboard
+│   │   ├── donate
+│   │   ├── scores
+│   │   └── stripe
+│   ├── charities
+│   ├── dashboard
+│   ├── login
+│   ├── pricing
+│   └── signup
+├── components
+│   ├── dashboard
+│   ├── home
+│   └── three
+├── hooks
+└── lib
+    ├── supabase
+    └── drawEngine.ts
+```
