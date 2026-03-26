@@ -7,7 +7,11 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   const { error } = await requireAdmin()
   
   if (error) {
-    // If not logged in or not an admin, bounce back to the normal dashboard
+    // Check if the error is 401 (Unauthorized - Not logged in)
+    if (error.status === 401) {
+      redirect('/')
+    }
+    // Otherwise it's 403 (Forbidden - Logged in but not an admin)
     redirect('/dashboard')
   }
 
