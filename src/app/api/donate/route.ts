@@ -1,12 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
-import { createClient } from '@/lib/supabase/server'
+import { getAuthUser } from '@/lib/supabase/admin'
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
 
 export async function POST(req: NextRequest) {
-  const supabase = createClient()
-  const { data: { user } } = await supabase.auth.getUser()
+  const user = await getAuthUser(req)
 
   const { charity_id, amount, charity_name } = await req.json()
 
@@ -31,8 +30,8 @@ export async function POST(req: NextRequest) {
       user_id: user?.id ?? 'guest',
       amount
     },
-    success_url: `${process.env.NEXT_PUBLIC_APP_URL}/charities/${charity_id}?donated=true`,
-    cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/charities/${charity_id}`,
+    success_url: `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/charities/${charity_id}?donated=true`,
+    cancel_url: `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/charities/${charity_id}`,
   })
 
   return NextResponse.json({ url: session.url })

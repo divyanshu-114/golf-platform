@@ -1,36 +1,39 @@
 import { useEffect, useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
 
+interface DashboardData {
+  profile: { id: string; full_name: string; charity_id: string | null; charity_contribution_pct: number; role: string } | null
+  subscription: { plan: string; status: string; renewal_date: string } | null
+  scores: { id: string; score: number; played_on: string; created_at: string }[]
+  charity: { charity_id: string | null; charity_contribution_pct: number; charities: { name: string } | null } | null
+  winners: { id: string; tier: number; prize_amount: number; verification_status: string; payout_status: string; draws: { month: string } }[]
+}
+
 export function useDashboard() {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [data, setData] = useState<any>(null)
+  const [data, setData] = useState<DashboardData | null>(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const supabase = createClient()
-        const { data: { user } } = await supabase.auth.getUser()
-        if (!user) {
+        const { data: sessionData } = await supabase.auth.getSession()
+        const token = sessionData.session?.access_token
+
+        if (!token) {
           setLoading(false)
           return
         }
 
-        const [profile, subscription, scores, charity, winners] = await Promise.all([
-          supabase.from('profiles').select('*').eq('id', user.id).single(),
-          supabase.from('subscriptions').select('*').eq('user_id', user.id).maybeSingle(),
-          supabase.from('scores').select('*').eq('user_id', user.id).order('played_on', { ascending: false }),
-          supabase.from('profiles').select('charity_id, charity_contribution_pct, charities(name)').eq('id', user.id).single(),
-          supabase.from('winners').select('*, draws(month)').eq('user_id', user.id).order('created_at', { ascending: false })
-        ])
-
-        setData({
-          profile: profile.data,
-          subscription: subscription.data,
-          scores: scores.data ?? [],
-          charity: charity.data,
-          winners: winners.data ?? [],
+        const res = await fetch('/api/dashboard', {
+          headers: { Authorization: `Bearer ${token}` }
         })
+        if (!res.ok) {
+          setLoading(false)
+          return
+        }
+        const json = await res.json()
+        setData(json)
       } catch (err) {
         console.error('Dashboard fetch error:', err)
       } finally {

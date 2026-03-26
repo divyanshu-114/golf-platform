@@ -107,7 +107,7 @@ export default function DashboardPage() {
                   Subscription
                 </h2>
               </div>
-              <SubscriptionCard subscription={data?.subscription} />
+              <SubscriptionCard subscription={data?.subscription ?? null} />
             </div>
 
           </div>
@@ -124,9 +124,9 @@ export default function DashboardPage() {
                 </h2>
               </div>
               <CharityCard
-                charityName={data?.charity?.charities?.name}
+                charityName={data?.charity?.charities?.name ?? null}
                 contributionPct={data?.charity?.charity_contribution_pct ?? 10}
-                userId={data?.profile?.id}
+                userId={data?.profile?.id ?? ''}
               />
             </div>
 

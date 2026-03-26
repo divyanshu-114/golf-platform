@@ -1,11 +1,18 @@
 'use client'
 import { useState, useEffect } from 'react'
+import { createClient } from '@/lib/supabase/client'
 
 interface Score {
   id: string
   score: number
   played_on: string
   created_at: string
+}
+
+async function getAccessToken() {
+  const supabase = createClient()
+  const { data } = await supabase.auth.getSession()
+  return data.session?.access_token ?? null
 }
 
 export default function ScoreEntry() {
@@ -17,7 +24,11 @@ export default function ScoreEntry() {
   const [success, setSuccess] = useState('')
 
   const fetchScores = async () => {
-    const res = await fetch('/api/scores')
+    const token = await getAccessToken()
+    if (!token) return
+    const res = await fetch('/api/scores', {
+      headers: { Authorization: `Bearer ${token}` }
+    })
     const data = await res.json()
     setScores(data.scores ?? [])
   }
@@ -37,9 +48,13 @@ export default function ScoreEntry() {
     if (!playedOn) return setError('Please select a date')
 
     setLoading(true)
+    const token = await getAccessToken()
     const res = await fetch('/api/scores', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
       body: JSON.stringify({ score, played_on: playedOn })
     })
 
@@ -55,7 +70,11 @@ export default function ScoreEntry() {
   }
 
   const handleDelete = async (id: string) => {
-    await fetch(`/api/scores/${id}`, { method: 'DELETE' })
+    const token = await getAccessToken()
+    await fetch(`/api/scores/${id}`, {
+      method: 'DELETE',
+      headers: { Authorization: `Bearer ${token}` },
+    })
     fetchScores()
   }
 
@@ -94,7 +113,6 @@ export default function ScoreEntry() {
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
-                  {/* Stableford visual bar */}
                   <div className="w-24 h-2 bg-gray-100 rounded-full overflow-hidden">
                     <div
                       className="h-full bg-black rounded-full"
@@ -113,7 +131,6 @@ export default function ScoreEntry() {
           </div>
         )}
 
-        {/* Slots remaining indicator */}
         <p className="text-xs text-gray-400">
           {scores.length}/5 scores stored
           {scores.length === 5 && ' — adding a new score will remove the oldest'}

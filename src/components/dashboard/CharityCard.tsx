@@ -16,10 +16,20 @@ export default function CharityCard({ charityName, contributionPct, userId }: Pr
   const handleUpdate = async () => {
     setSaving(true)
     const supabase = createClient()
-    await supabase
-      .from('profiles')
-      .update({ charity_contribution_pct: pct })
-      .eq('id', userId)
+    const { data } = await supabase.auth.getSession()
+    const token = data.session?.access_token
+
+    await fetch('/api/charities/select', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        charity_id: null, // Keep existing charity, just update pct
+        contribution_pct: pct,
+      }),
+    })
     setSaving(false)
     setSaved(true)
     setTimeout(() => setSaved(false), 2000)
@@ -59,7 +69,7 @@ export default function CharityCard({ charityName, contributionPct, userId }: Pr
 
       <button
         onClick={handleUpdate}
-        disabled={saving}
+        disabled={saving || !userId}
         className="w-full bg-black text-white py-2 rounded-xl text-sm hover:bg-gray-800 disabled:opacity-50"
       >
         {saved ? '✓ Saved!' : saving ? 'Saving...' : 'Update Contribution'}

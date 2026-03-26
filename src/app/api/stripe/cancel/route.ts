@@ -1,26 +1,31 @@
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
-import { createClient } from '@/lib/supabase/server'
+import { getAuthUser, supabaseAdmin } from '@/lib/supabase/admin'
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
 
-export async function POST() {
-  const supabase = createClient()
-  const { data: { user } } = await supabase.auth.getUser()
+export async function POST(req: NextRequest) {
+  const user = await getAuthUser(req)
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
-  const { data: sub } = await supabase
+  // Get the user's subscription
+  const { data: sub } = await supabaseAdmin
     .from('subscriptions')
     .select('stripe_subscription_id')
     .eq('user_id', user.id)
-    .single()
+    .eq('status', 'active')
+    .maybeSingle()
 
-  if (!sub) return NextResponse.json({ error: 'No subscription found' }, { status: 404 })
+  if (!sub?.stripe_subscription_id) {
+    return NextResponse.json({ error: 'No active subscription found' }, { status: 404 })
+  }
 
-  // Cancel at period end — user keeps access until renewal date
-  await stripe.subscriptions.update(sub.stripe_subscription_id, {
-    cancel_at_period_end: true
-  })
+  await stripe.subscriptions.cancel(sub.stripe_subscription_id)
+
+  await supabaseAdmin
+    .from('subscriptions')
+    .update({ status: 'cancelled' })
+    .eq('user_id', user.id)
 
   return NextResponse.json({ success: true })
 }
