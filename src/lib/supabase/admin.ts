@@ -9,62 +9,58 @@ export const supabaseAdmin = createClient(
 
 /**
  * Extract and verify the authenticated user from a Next.js API request.
- * Reads the Supabase auth token from cookies or the Authorization header.
+ * Reads the Supabase auth token from the Authorization header or cookies.
  * Returns the user object or null if not authenticated.
  */
 export async function getAuthUser(req: NextRequest) {
-  // Try to get token from cookies (set by @supabase/ssr middleware)
-  const accessToken =
-    req.cookies.get('sb-agwlbfpqxcjqsktayfes-auth-token.0')?.value ??
-    req.cookies.get('sb-agwlbfpqxcjqsktayfes-auth-token')?.value ??
-    null
-
-  // Also check Authorization header
+  // 1. Check Authorization header FIRST (most reliable — it's a raw JWT)
   const authHeader = req.headers.get('authorization')
   const bearerToken = authHeader?.startsWith('Bearer ') ? authHeader.slice(7) : null
 
-  const token = accessToken || bearerToken
-
-  if (!token) {
-    // Fallback: try the full cookie-based approach via admin
-    // Parse all sb-* cookies to reconstruct the session
-    const allCookies = req.cookies.getAll()
-    const sbCookies = allCookies.filter(c => c.name.startsWith('sb-'))
-
-    if (sbCookies.length === 0) return null
-
-    // For chunked tokens, reconstruct them
-    const tokenCookies = sbCookies
-      .filter(c => c.name.includes('auth-token'))
-      .sort((a, b) => a.name.localeCompare(b.name))
-
-    if (tokenCookies.length === 0) return null
-
-    const fullToken = tokenCookies.map(c => c.value).join('')
-
-    if (!fullToken) return null
-
+  if (bearerToken) {
     try {
-      // Parse the base64-encoded session JSON
-      const decoded = Buffer.from(fullToken, 'base64').toString('utf-8')
-      const session = JSON.parse(decoded)
-      const jwt = session?.access_token
+      const { data: { user }, error } = await supabaseAdmin.auth.getUser(bearerToken)
+      if (!error && user) return user
+    } catch {
+      // fall through to cookie-based approach
+    }
+  }
 
-      if (!jwt) return null
+  // 2. Try cookie-based approach — Supabase SSR stores the session in cookies
+  const allCookies = req.cookies.getAll()
+  const tokenCookies = allCookies
+    .filter(c => c.name.includes('auth-token'))
+    .sort((a, b) => a.name.localeCompare(b.name))
 
-      const { data: { user }, error } = await supabaseAdmin.auth.getUser(jwt)
+  if (tokenCookies.length === 0) return null
+
+  const rawCookieValue = tokenCookies.map(c => c.value).join('')
+
+  if (!rawCookieValue) return null
+
+  // The cookie may be prefixed with "base64-" — strip it and decode
+  const base64Value = rawCookieValue.startsWith('base64-')
+    ? rawCookieValue.slice(7)
+    : rawCookieValue
+
+  try {
+    const decoded = Buffer.from(base64Value, 'base64').toString('utf-8')
+    const session = JSON.parse(decoded)
+    const jwt = session?.access_token
+
+    if (!jwt) return null
+
+    const { data: { user }, error } = await supabaseAdmin.auth.getUser(jwt)
+    if (error || !user) return null
+    return user
+  } catch {
+    // Maybe the cookie itself is a raw JWT (older Supabase versions)
+    try {
+      const { data: { user }, error } = await supabaseAdmin.auth.getUser(rawCookieValue)
       if (error || !user) return null
       return user
     } catch {
       return null
     }
-  }
-
-  try {
-    const { data: { user }, error } = await supabaseAdmin.auth.getUser(token)
-    if (error || !user) return null
-    return user
-  } catch {
-    return null
   }
 }

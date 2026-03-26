@@ -24,21 +24,55 @@ export async function POST(req: NextRequest) {
   if (event.type === 'checkout.session.completed') {
     const session = event.data.object as Stripe.Checkout.Session
     const userId = session.metadata?.user_id
-    const plan = session.metadata?.plan
-    const stripeSubId = session.subscription as string
 
-    // Fetch renewal date from Stripe
-    const sub = await stripe.subscriptions.retrieve(stripeSubId)
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const renewalDate = new Date((sub as any).current_period_end * 1000).toISOString()
+    console.log('[webhook] checkout session mode:', session.mode, 'subscription ID:', session.subscription)
 
-    await supabase.from('subscriptions').upsert({
-      user_id: userId,
-      stripe_subscription_id: stripeSubId,
-      plan,
-      status: 'active',
-      renewal_date: renewalDate,
-    }, { onConflict: 'user_id' })
+    if (session.mode === 'subscription') {
+      const plan = session.metadata?.plan
+      const stripeSubId = session.subscription as string
+
+      console.log('[webhook] processing subscription:', stripeSubId)
+
+      try {
+        // Fetch renewal date from Stripe
+        const sub = await stripe.subscriptions.retrieve(stripeSubId)
+
+        // The renewal date is now on the subscription item in recent Stripe API versions
+        const currentPeriodEnd = sub.items?.data?.[0]?.current_period_end
+        if (!currentPeriodEnd) throw new Error('Missing current_period_end on subscription item')
+        
+        const renewalDate = new Date(currentPeriodEnd * 1000).toISOString()
+
+        const { data: existingSub } = await supabase
+          .from('subscriptions')
+          .select('id')
+          .eq('user_id', userId)
+          .maybeSingle()
+
+        if (existingSub) {
+          const { error: updateError } = await supabase.from('subscriptions').update({
+            stripe_subscription_id: stripeSubId,
+            plan,
+            status: 'active',
+            renewal_date: renewalDate,
+          }).eq('user_id', userId)
+          if (updateError) console.error('[webhook] DB Update Error:', updateError)
+        } else {
+          const { error: insertError } = await supabase.from('subscriptions').insert({
+            user_id: userId,
+            stripe_subscription_id: stripeSubId,
+            plan,
+            status: 'active',
+            renewal_date: renewalDate,
+          })
+          if (insertError) console.error('[webhook] DB Insert Error:', insertError)
+        }
+        
+        console.log('[webhook] upserted subscription for user:', userId)
+      } catch (err) {
+        console.error('[webhook] error processing subscription:', err)
+      }
+    }
 
     if (session.metadata?.type === 'donation') {
       await supabase.from('donations').insert({
