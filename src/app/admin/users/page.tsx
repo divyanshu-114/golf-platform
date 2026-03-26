@@ -38,7 +38,7 @@ export default function AdminUsers() {
 
       <div className="bg-white rounded-2xl border overflow-hidden">
         <table className="w-full text-sm">
-          <thead className="bg-gray-50 text-gray-400 uppercase text-xs">
+          <thead className="bg-gray-50 text-gray-500 uppercase text-xs">
             <tr>
               {['Name', 'Plan', 'Status', 'Scores', 'Joined', 'Actions'].map(h => (
                 <th key={h} className="text-left px-4 py-3 font-medium">{h}</th>
@@ -56,7 +56,7 @@ export default function AdminUsers() {
                     {sub?.status ?? 'none'}
                   </td>
                   <td className="px-4 py-3">{user.scores?.length ?? 0}/5</td>
-                  <td className="px-4 py-3 text-gray-400">
+                  <td className="px-4 py-3 text-gray-600">
                     {new Date(user.created_at).toLocaleDateString('en-GB')}
                   </td>
                   <td className="px-4 py-3">
@@ -73,7 +73,7 @@ export default function AdminUsers() {
           </tbody>
         </table>
         {filtered.length === 0 && (
-          <p className="text-center text-gray-400 py-8">No users found.</p>
+          <p className="text-center text-gray-500 py-8">No users found.</p>
         )}
       </div>
     </div>

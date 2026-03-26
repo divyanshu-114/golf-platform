@@ -86,17 +86,17 @@ export default function AdminDraws() {
           </div>
           <div className="grid grid-cols-3 gap-3 text-sm">
             <div className="bg-white rounded-xl p-3">
-              <p className="text-xs text-gray-400">5-Match Winners</p>
+              <p className="text-xs text-gray-600">5-Match Winners</p>
               <p className="font-bold text-lg">{simulation.winners[5]?.length ?? 0}</p>
               <p className="text-xs text-gray-500">Pool: £{simulation.pools.tier5}</p>
             </div>
             <div className="bg-white rounded-xl p-3">
-              <p className="text-xs text-gray-400">4-Match Winners</p>
+              <p className="text-xs text-gray-600">4-Match Winners</p>
               <p className="font-bold text-lg">{simulation.winners[4]?.length ?? 0}</p>
               <p className="text-xs text-gray-500">Pool: £{simulation.pools.tier4}</p>
             </div>
             <div className="bg-white rounded-xl p-3">
-              <p className="text-xs text-gray-400">3-Match Winners</p>
+              <p className="text-xs text-gray-600">3-Match Winners</p>
               <p className="font-bold text-lg">{simulation.winners[3]?.length ?? 0}</p>
               <p className="text-xs text-gray-500">Pool: £{simulation.pools.tier3}</p>
             </div>
@@ -119,7 +119,7 @@ export default function AdminDraws() {
       {/* Draws Table */}
       <div className="bg-white rounded-2xl border overflow-hidden">
         <table className="w-full text-sm">
-          <thead className="bg-gray-50 text-gray-400 uppercase text-xs">
+          <thead className="bg-gray-50 text-gray-500 uppercase text-xs">
             <tr>
               {['Month', 'Status', 'Winning Numbers', 'Jackpot Rollover', 'Actions'].map(h => (
                 <th key={h} className="text-left px-4 py-3 font-medium">{h}</th>
@@ -144,7 +144,7 @@ export default function AdminDraws() {
                     ? <div className="flex gap-1">{draw.winning_numbers.map((n: number) => (
                         <span key={n} className="w-7 h-7 rounded-full bg-black text-white text-xs flex items-center justify-center font-bold">{n}</span>
                       ))}</div>
-                    : <span className="text-gray-400">—</span>
+                    : <span className="text-gray-500">—</span>
                   }
                 </td>
                 <td className="px-4 py-3">
@@ -168,7 +168,7 @@ export default function AdminDraws() {
           </tbody>
         </table>
         {draws.length === 0 && (
-          <p className="text-center text-gray-400 py-8">No draws yet.</p>
+          <p className="text-center text-gray-500 py-8">No draws yet.</p>
         )}
       </div>
     </div>

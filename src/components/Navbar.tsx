@@ -63,7 +63,7 @@ export default function Navbar() {
         <div className="flex items-center gap-3">
           {user ? (
             <>
-              <span className="hidden md:block text-xs text-gray-400 mr-1">
+              <span className="hidden md:block text-xs text-gray-500 mr-1">
                 {user.email}
               </span>
               {!isDashboard && (

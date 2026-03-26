@@ -106,7 +106,7 @@ export default function AdminCharities() {
       {/* List */}
       <div className="bg-white border rounded-2xl overflow-hidden">
         <table className="w-full text-sm">
-          <thead className="bg-gray-50 text-gray-400 uppercase text-xs">
+          <thead className="bg-gray-50 text-gray-500 uppercase text-xs">
             <tr>
               {['Name', 'Featured', 'Description', 'Actions'].map(h => (
                 <th key={h} className="text-left px-4 py-3 font-medium">{h}</th>
@@ -120,10 +120,10 @@ export default function AdminCharities() {
                 <td className="px-4 py-3">
                   {c.is_featured
                     ? <span className="text-xs bg-yellow-100 text-yellow-700 px-2 py-1 rounded-full">⭐ Featured</span>
-                    : <span className="text-xs text-gray-400">—</span>
+                    : <span className="text-xs text-gray-500">—</span>
                   }
                 </td>
-                <td className="px-4 py-3 text-gray-400 max-w-xs truncate">{c.description}</td>
+                <td className="px-4 py-3 text-gray-600 max-w-xs truncate">{c.description}</td>
                 <td className="px-4 py-3 flex gap-3">
                   <button onClick={() => handleEdit(c)} className="text-xs text-blue-500 hover:underline">Edit</button>
                   <button onClick={() => handleDelete(c.id)} className="text-xs text-red-400 hover:text-red-600">Delete</button>
@@ -133,7 +133,7 @@ export default function AdminCharities() {
           </tbody>
         </table>
         {charities.length === 0 && (
-          <p className="text-center text-gray-400 py-8">No charities yet.</p>
+          <p className="text-center text-gray-500 py-8">No charities yet.</p>
         )}
       </div>
     </div>

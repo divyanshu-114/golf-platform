@@ -54,9 +54,9 @@ export default function CharitySelectPage() {
       <Navbar />
       <div className="max-w-4xl mx-auto px-6 pt-24 pb-12 space-y-8">
         <div>
-          <Link href="/dashboard" className="text-sm text-gray-400 hover:text-black transition">← Back to Dashboard</Link>
+          <Link href="/dashboard" className="text-sm text-gray-600 hover:text-black transition">← Back to Dashboard</Link>
           <h1 className="text-3xl font-bold mt-2">Choose Your Charity</h1>
-          <p className="text-gray-400 mt-1">Select a charity to support with a portion of your subscription.</p>
+          <p className="text-gray-600 mt-1">Select a charity to support with a portion of your subscription.</p>
         </div>
 
         {/* Contribution slider */}
@@ -74,7 +74,7 @@ export default function CharitySelectPage() {
             onChange={e => setPct(Number(e.target.value))}
             className="w-full accent-green-600"
           />
-          <div className="flex justify-between text-xs text-gray-400">
+          <div className="flex justify-between text-xs text-gray-500">
             <span>Min 10%</span>
             <span>Max 50%</span>
           </div>
@@ -98,7 +98,7 @@ export default function CharitySelectPage() {
                   <div className="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center text-2xl">💚</div>
                   <div className="flex-1">
                     <h3 className="font-semibold">{c.name}</h3>
-                    <p className="text-sm text-gray-400 mt-1 line-clamp-2">{c.description}</p>
+                    <p className="text-sm text-gray-600 mt-1 line-clamp-2">{c.description}</p>
                   </div>
                 </div>
                 {c.is_featured && (

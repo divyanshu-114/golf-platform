@@ -26,7 +26,7 @@ export default function AdminWinners() {
 
       <div className="bg-white rounded-2xl border overflow-hidden">
         <table className="w-full text-sm">
-          <thead className="bg-gray-50 text-gray-400 uppercase text-xs">
+          <thead className="bg-gray-50 text-gray-500 uppercase text-xs">
             <tr>
               {['User', 'Draw', 'Tier', 'Prize', 'Verification', 'Payout', 'Actions'].map(h => (
                 <th key={h} className="text-left px-4 py-3 font-medium">{h}</th>
@@ -37,7 +37,7 @@ export default function AdminWinners() {
             {winners.map(w => (
               <tr key={w.id} className="border-t hover:bg-gray-50">
                 <td className="px-4 py-3 font-medium">{w.profiles?.full_name ?? '—'}</td>
-                <td className="px-4 py-3 text-gray-400">
+                <td className="px-4 py-3 text-gray-600">
                   {new Date(w.draws?.month).toLocaleDateString('en-GB', { month: 'short', year: 'numeric' })}
                 </td>
                 <td className="px-4 py-3">{tierLabel(w.tier)}</td>
@@ -75,7 +75,7 @@ export default function AdminWinners() {
           </tbody>
         </table>
         {winners.length === 0 && (
-          <p className="text-center text-gray-400 py-8">No winners yet.</p>
+          <p className="text-center text-gray-500 py-8">No winners yet.</p>
         )}
       </div>
     </div>

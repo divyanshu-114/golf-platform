@@ -21,14 +21,14 @@ export default function AdminOverview() {
     <div className="space-y-6">
       <h1 className="text-2xl font-bold">Overview</h1>
       {!stats ? (
-        <p className="text-gray-400">Loading...</p>
+        <p className="text-gray-600">Loading...</p>
       ) : (
         <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
           {cards.map(({ label, value, icon }) => (
             <div key={label} className="bg-white rounded-2xl border p-6 space-y-2">
               <span className="text-2xl">{icon}</span>
               <p className="text-2xl font-bold">{value}</p>
-              <p className="text-sm text-gray-400">{label}</p>
+              <p className="text-sm text-gray-600">{label}</p>
             </div>
           ))}
         </div>

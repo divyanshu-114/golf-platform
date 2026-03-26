@@ -30,7 +30,7 @@ export default function SubscriptionCard({ subscription }: Props) {
     <div className="bg-white rounded-2xl border p-6 space-y-4">
       <div className="flex justify-between items-start">
         <div>
-          <p className="text-xs text-gray-400 uppercase tracking-wide">Subscription</p>
+          <p className="text-xs text-gray-500 uppercase tracking-wide">Subscription</p>
           <p className="text-xl font-bold capitalize mt-1">{subscription.plan} Plan</p>
         </div>
         <span className={`text-xs font-medium px-3 py-1 rounded-full capitalize ${statusStyles[subscription.status]}`}>

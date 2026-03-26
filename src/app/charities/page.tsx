@@ -1,6 +1,7 @@
 'use client'
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
+import BackButton from '@/components/BackButton'
 
 interface Charity {
   id: string
@@ -37,9 +38,10 @@ export default function CharitiesPage() {
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-12 space-y-10">
+      <BackButton />
       <div className="space-y-2">
         <h1 className="text-4xl font-bold">Our Charities</h1>
-        <p className="text-gray-400">Every subscription makes a difference. Choose who you support.</p>
+        <p className="text-gray-600">Every subscription makes a difference. Choose who you support.</p>
       </div>
 
       {/* Search */}
@@ -100,7 +102,7 @@ export default function CharitiesPage() {
                     </div>
                     <div>
                       <h3 className="font-semibold">{c.name}</h3>
-                      <p className="text-sm text-gray-400 mt-1 line-clamp-2">{c.description}</p>
+                      <p className="text-sm text-gray-600 mt-1 line-clamp-2">{c.description}</p>
                     </div>
                     <span className="text-xs text-black font-medium underline">View profile →</span>
                   </div>
@@ -108,7 +110,7 @@ export default function CharitiesPage() {
               ))}
             </div>
             {charities.length === 0 && (
-              <p className="text-center text-gray-400 py-12">No charities found.</p>
+              <p className="text-center text-gray-500 py-12">No charities found.</p>
             )}
           </div>
         </>

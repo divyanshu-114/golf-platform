@@ -1,6 +1,7 @@
 'use client'
 import { useEffect, useState } from 'react'
 import { useParams, useSearchParams } from 'next/navigation'
+import BackButton from '@/components/BackButton'
 
 export default function CharityProfilePage() {
   const { id } = useParams()
@@ -51,6 +52,7 @@ export default function CharityProfilePage() {
 
   return (
     <div className="max-w-3xl mx-auto px-4 py-12 space-y-8">
+      <BackButton />
 
       {donated && (
         <div className="bg-green-50 border border-green-200 rounded-2xl p-4 text-green-700 text-sm font-medium">
@@ -74,7 +76,7 @@ export default function CharityProfilePage() {
         {/* Select as my charity */}
         <div className="bg-white border rounded-2xl p-6 space-y-4">
           <h2 className="font-semibold">Support via Subscription</h2>
-          <p className="text-sm text-gray-400">
+          <p className="text-sm text-gray-600">
             Set this as your chosen charity. A minimum of 10% of your subscription will go directly to them.
           </p>
           <button
@@ -89,12 +91,12 @@ export default function CharityProfilePage() {
         {/* One-off donation */}
         <div className="bg-white border rounded-2xl p-6 space-y-4">
           <h2 className="font-semibold">Make a Donation</h2>
-          <p className="text-sm text-gray-400">
+          <p className="text-sm text-gray-600">
             Make a one-off donation directly to this charity, independent of your subscription.
           </p>
           <div className="flex gap-2">
             <div className="relative flex-1">
-              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm">£</span>
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm">£</span>
               <input
                 type="number"
                 min={1}
@@ -142,8 +144,8 @@ export default function CharityProfilePage() {
                   </div>
                   <div>
                     <p className="font-semibold">{event.title}</p>
-                    {event.description && <p className="text-sm text-gray-400 mt-1">{event.description}</p>}
-                    {event.location && <p className="text-xs text-gray-400 mt-1">📍 {event.location}</p>}
+                    {event.description && <p className="text-sm text-gray-600 mt-1">{event.description}</p>}
+                    {event.location && <p className="text-xs text-gray-500 mt-1">📍 {event.location}</p>}
                   </div>
                 </div>
               ))}

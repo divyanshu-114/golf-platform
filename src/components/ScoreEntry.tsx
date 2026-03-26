@@ -100,16 +100,16 @@ export default function ScoreEntry() {
         </div>
 
         {scores.length === 0 ? (
-          <p className="text-gray-400 text-sm">No scores yet. Add your first round below.</p>
+          <p className="text-gray-500 text-sm">No scores yet. Add your first round below.</p>
         ) : (
           <div className="space-y-2">
             {scores.map((s, i) => (
               <div key={s.id} className="flex items-center justify-between py-3 border-b last:border-0">
                 <div className="flex items-center gap-4">
-                  <span className="text-xs text-gray-400 w-4">{i + 1}</span>
+                  <span className="text-xs text-gray-500 w-4">{i + 1}</span>
                   <div>
                     <p className="font-semibold text-lg">{s.score} pts</p>
-                    <p className="text-xs text-gray-400">{formatDate(s.played_on)}</p>
+                    <p className="text-xs text-gray-500">{formatDate(s.played_on)}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
@@ -131,7 +131,7 @@ export default function ScoreEntry() {
           </div>
         )}
 
-        <p className="text-xs text-gray-400">
+        <p className="text-xs text-gray-500">
           {scores.length}/5 scores stored
           {scores.length === 5 && ' — adding a new score will remove the oldest'}
         </p>

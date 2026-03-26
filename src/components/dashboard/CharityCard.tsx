@@ -37,7 +37,7 @@ export default function CharityCard({ charityName, contributionPct, userId }: Pr
 
   return (
     <div className="bg-white rounded-2xl border p-6 space-y-4">
-      <p className="text-xs text-gray-400 uppercase tracking-wide">Your Charity</p>
+      <p className="text-xs text-gray-500 uppercase tracking-wide">Your Charity</p>
 
       <div className="flex items-center gap-3">
         <div className="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-lg">💚</div>
@@ -61,7 +61,7 @@ export default function CharityCard({ charityName, contributionPct, userId }: Pr
           onChange={e => setPct(Number(e.target.value))}
           className="w-full accent-black"
         />
-        <div className="flex justify-between text-xs text-gray-400">
+        <div className="flex justify-between text-xs text-gray-500">
           <span>Min 10%</span>
           <span>Max 50%</span>
         </div>

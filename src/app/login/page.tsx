@@ -4,6 +4,7 @@ import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import dynamic from 'next/dynamic'
+import BackButton from '@/components/BackButton'
 
 const GolfBallScene = dynamic(() => import('@/components/three/GolfBallScene'), { ssr: false })
 
@@ -59,6 +60,9 @@ export default function LoginPage() {
 
       {/* Login Card */}
       <div className="relative z-10 w-full max-w-md mx-4">
+        <div className="mb-4">
+          <BackButton label="← Back to Home" variant="dark" />
+        </div>
         <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-3xl p-8 space-y-6 shadow-2xl">
           <div className="text-center space-y-2">
             <p className="text-3xl">⛳</p>
