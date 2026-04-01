@@ -12,14 +12,14 @@ export default function FinalCTA() {
           viewport={{ once: true }}
           className="space-y-4"
         >
-          <p className="text-xs uppercase tracking-widest text-gray-500">Ready to start?</p>
+          <p className="text-xs uppercase tracking-widest text-black">Ready to start?</p>
           <h2 className="text-5xl font-bold leading-tight">
             Play with purpose.<br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-emerald-300">
               Win with meaning.
             </span>
           </h2>
-          <p className="text-gray-400 text-lg">
+          <p className="text-black text-lg">
             Join hundreds of golfers who play for more than just the scorecard.
           </p>
         </motion.div>
@@ -41,7 +41,7 @@ export default function FinalCTA() {
           </Link>
         </motion.div>
 
-        <p className="text-xs text-gray-600">No hidden fees · Cancel anytime · Min 10% to charity</p>
+        <p className="text-xs text-black">No hidden fees · Cancel anytime · Min 10% to charity</p>
       </div>
     </section>
   )

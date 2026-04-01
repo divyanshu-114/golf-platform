@@ -55,15 +55,15 @@ export default function Navbar() {
 
         {/* Desktop Nav */}
         <div className="hidden md:flex items-center gap-6 text-sm">
-          <Link href="/charities" className="text-gray-600 hover:text-black transition">Charities</Link>
-          <Link href="/#how-it-works" className="text-gray-600 hover:text-black transition">How It Works</Link>
-          <Link href="/#prizes" className="text-gray-600 hover:text-black transition">Prizes</Link>
+          <Link href="/charities" className="text-black hover:text-black transition">Charities</Link>
+          <Link href="/#how-it-works" className="text-black hover:text-black transition">How It Works</Link>
+          <Link href="/#prizes" className="text-black hover:text-black transition">Prizes</Link>
         </div>
 
         <div className="flex items-center gap-3">
           {user ? (
             <>
-              <span className="hidden md:block text-xs text-gray-500 mr-1">
+              <span className="hidden md:block text-xs text-black mr-1">
                 {user.email}
               </span>
               {!isDashboard && (
@@ -82,7 +82,7 @@ export default function Navbar() {
             </>
           ) : (
             <>
-              <Link href="/login" className="text-sm text-gray-600 hover:text-black transition">Log in</Link>
+              <Link href="/login" className="text-sm text-black hover:text-black transition">Log in</Link>
               <Link href="/pricing"
                 className="bg-black text-white text-sm px-4 py-2 rounded-full hover:bg-gray-800 transition">
                 Get Started
@@ -106,9 +106,9 @@ export default function Navbar() {
       {/* Mobile menu */}
       {menuOpen && (
         <div className="md:hidden bg-white border-t px-6 py-4 space-y-3">
-          <Link href="/charities" className="block text-sm text-gray-600" onClick={() => setMenuOpen(false)}>Charities</Link>
-          <Link href="/#how-it-works" className="block text-sm text-gray-600" onClick={() => setMenuOpen(false)}>How It Works</Link>
-          <Link href="/#prizes" className="block text-sm text-gray-600" onClick={() => setMenuOpen(false)}>Prizes</Link>
+          <Link href="/charities" className="block text-sm text-black" onClick={() => setMenuOpen(false)}>Charities</Link>
+          <Link href="/#how-it-works" className="block text-sm text-black" onClick={() => setMenuOpen(false)}>How It Works</Link>
+          <Link href="/#prizes" className="block text-sm text-black" onClick={() => setMenuOpen(false)}>Prizes</Link>
         </div>
       )}
     </nav>

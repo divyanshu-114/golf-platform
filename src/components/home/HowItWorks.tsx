@@ -27,7 +27,7 @@ export default function HowItWorks() {
     <section id="how-it-works" className="py-24 bg-white px-6">
       <div className="max-w-5xl mx-auto space-y-16">
         <div className="text-center space-y-3">
-          <p className="text-xs uppercase tracking-widest text-gray-400 font-medium">Simple by design</p>
+          <p className="text-xs uppercase tracking-widest text-black font-medium">Simple by design</p>
           <h2 className="text-4xl font-bold">How it works</h2>
         </div>
 
@@ -51,7 +51,7 @@ export default function HowItWorks() {
                   <span className="text-xs font-bold text-gray-300">{step.number}</span>
                 </div>
                 <h3 className="text-xl font-bold">{step.title}</h3>
-                <p className="text-gray-500 leading-relaxed text-sm">{step.desc}</p>
+                <p className="text-black leading-relaxed text-sm">{step.desc}</p>
               </div>
             </motion.div>
           ))}

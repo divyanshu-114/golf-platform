@@ -17,7 +17,7 @@ const payoutBadge: Record<string, string> = {
 }
 
 const verifyBadge: Record<string, string> = {
-  pending: 'bg-gray-100 text-gray-500',
+  pending: 'bg-gray-100 text-black',
   approved: 'bg-green-100 text-green-700',
   rejected: 'bg-red-100 text-red-600',
 }
@@ -30,19 +30,19 @@ export default function WinningsCard({ winners }: Props) {
   return (
     <div className="bg-white rounded-2xl border p-6 space-y-4">
       <div className="flex justify-between items-center">
-        <p className="text-xs text-gray-500 uppercase tracking-wide">Winnings</p>
+        <p className="text-xs text-black uppercase tracking-wide">Winnings</p>
         <p className="text-sm font-bold text-green-600">£{total.toFixed(2)} total paid</p>
       </div>
 
       {winners.length === 0 ? (
-        <p className="text-gray-500 text-sm">No winnings yet — keep playing!</p>
+        <p className="text-black text-sm">No winnings yet — keep playing!</p>
       ) : (
         <div className="space-y-3">
           {winners.map(w => (
             <div key={w.id} className="flex items-center justify-between text-sm border-b pb-3 last:border-0">
               <div>
                 <p className="font-medium">{tierLabel(w.tier)}</p>
-                <p className="text-xs text-gray-500">
+                <p className="text-xs text-black">
                   {new Date(w.draws.month).toLocaleDateString('en-GB', { month: 'long', year: 'numeric' })}
                 </p>
               </div>

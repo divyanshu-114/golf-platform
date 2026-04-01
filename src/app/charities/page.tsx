@@ -41,7 +41,7 @@ export default function CharitiesPage() {
       <BackButton />
       <div className="space-y-2">
         <h1 className="text-4xl font-bold">Our Charities</h1>
-        <p className="text-gray-600">Every subscription makes a difference. Choose who you support.</p>
+        <p className="text-black">Every subscription makes a difference. Choose who you support.</p>
       </div>
 
       {/* Search */}
@@ -73,7 +73,7 @@ export default function CharitiesPage() {
                       <h3 className="text-2xl font-bold mt-2">{c.name}</h3>
                       <p className="text-gray-300 text-sm max-w-md">{c.description}</p>
                       {c.charity_events?.length > 0 && (
-                        <p className="text-xs text-gray-400">
+                        <p className="text-xs text-black">
                           🗓 {c.charity_events.length} upcoming event{c.charity_events.length > 1 ? 's' : ''}
                         </p>
                       )}
@@ -102,7 +102,7 @@ export default function CharitiesPage() {
                     </div>
                     <div>
                       <h3 className="font-semibold">{c.name}</h3>
-                      <p className="text-sm text-gray-600 mt-1 line-clamp-2">{c.description}</p>
+                      <p className="text-sm text-black mt-1 line-clamp-2">{c.description}</p>
                     </div>
                     <span className="text-xs text-black font-medium underline">View profile →</span>
                   </div>
@@ -110,7 +110,7 @@ export default function CharitiesPage() {
               ))}
             </div>
             {charities.length === 0 && (
-              <p className="text-center text-gray-500 py-12">No charities found.</p>
+              <p className="text-center text-black py-12">No charities found.</p>
             )}
           </div>
         </>

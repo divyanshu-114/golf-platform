@@ -20,7 +20,7 @@ export default function AdminUsers() {
   }
 
   const statusColor: Record<string, string> = {
-    active: 'text-green-600', inactive: 'text-gray-400',
+    active: 'text-green-600', inactive: 'text-black',
     cancelled: 'text-red-500', lapsed: 'text-yellow-600'
   }
 
@@ -38,7 +38,7 @@ export default function AdminUsers() {
 
       <div className="bg-white rounded-2xl border overflow-hidden">
         <table className="w-full text-sm">
-          <thead className="bg-gray-50 text-gray-500 uppercase text-xs">
+          <thead className="bg-gray-50 text-black uppercase text-xs">
             <tr>
               {['Name', 'Plan', 'Status', 'Scores', 'Joined', 'Actions'].map(h => (
                 <th key={h} className="text-left px-4 py-3 font-medium">{h}</th>
@@ -52,11 +52,11 @@ export default function AdminUsers() {
                 <tr key={user.id} className="border-t hover:bg-gray-50">
                   <td className="px-4 py-3 font-medium">{user.full_name ?? '—'}</td>
                   <td className="px-4 py-3 capitalize">{sub?.plan ?? '—'}</td>
-                  <td className={`px-4 py-3 capitalize font-medium ${statusColor[sub?.status] ?? 'text-gray-400'}`}>
+                  <td className={`px-4 py-3 capitalize font-medium ${statusColor[sub?.status] ?? 'text-black'}`}>
                     {sub?.status ?? 'none'}
                   </td>
                   <td className="px-4 py-3">{user.scores?.length ?? 0}/5</td>
-                  <td className="px-4 py-3 text-gray-600">
+                  <td className="px-4 py-3 text-black">
                     {new Date(user.created_at).toLocaleDateString('en-GB')}
                   </td>
                   <td className="px-4 py-3">
@@ -73,7 +73,7 @@ export default function AdminUsers() {
           </tbody>
         </table>
         {filtered.length === 0 && (
-          <p className="text-center text-gray-500 py-8">No users found.</p>
+          <p className="text-center text-black py-8">No users found.</p>
         )}
       </div>
     </div>

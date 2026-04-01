@@ -40,7 +40,7 @@ export default function DrawResults({ userId }: { userId: string }) {
       <h2 className="text-lg font-semibold">Recent Draws</h2>
 
       {draws.length === 0 ? (
-        <p className="text-gray-400 text-sm">No draws published yet.</p>
+        <p className="text-black text-sm">No draws published yet.</p>
       ) : (
         <div className="space-y-4">
           {draws.map(draw => {
@@ -60,7 +60,7 @@ export default function DrawResults({ userId }: { userId: string }) {
                       matches >= 5 ? 'bg-yellow-100 text-yellow-700' :
                       matches >= 4 ? 'bg-blue-100 text-blue-700' :
                       matches >= 3 ? 'bg-green-100 text-green-700' :
-                      'bg-gray-100 text-gray-500'
+                      'bg-gray-100 text-black'
                     }`}>
                       {matches >= 3 ? `🏅 ${matches} Matches!` : `${matches} Matches`}
                     </span>
@@ -69,11 +69,11 @@ export default function DrawResults({ userId }: { userId: string }) {
 
                 {/* Winning Numbers */}
                 <div>
-                  <p className="text-xs text-gray-400 mb-2">Winning Numbers</p>
+                  <p className="text-xs text-black mb-2">Winning Numbers</p>
                   <div className="flex gap-2">
                     {draw.winning_numbers?.map((n: number) => (
                       <div key={n} className={`w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold
-                        ${userNums.includes(n) ? 'bg-black text-white' : 'bg-gray-100 text-gray-600'}`}>
+                        ${userNums.includes(n) ? 'bg-black text-white' : 'bg-gray-100 text-black'}`}>
                         {n}
                       </div>
                     ))}
@@ -83,11 +83,11 @@ export default function DrawResults({ userId }: { userId: string }) {
                 {/* User's numbers */}
                 {userNums.length > 0 && (
                   <div>
-                    <p className="text-xs text-gray-400 mb-2">Your Numbers</p>
+                    <p className="text-xs text-black mb-2">Your Numbers</p>
                     <div className="flex gap-2">
                       {userNums.map((n: number) => (
                         <div key={n} className={`w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold border-2
-                          ${draw.winning_numbers?.includes(n) ? 'border-black text-black' : 'border-gray-200 text-gray-400'}`}>
+                          ${draw.winning_numbers?.includes(n) ? 'border-black text-black' : 'border-gray-200 text-black'}`}>
                           {n}
                         </div>
                       ))}
@@ -108,3 +108,5 @@ export default function DrawResults({ userId }: { userId: string }) {
     </div>
   )
 }
+
+// acha

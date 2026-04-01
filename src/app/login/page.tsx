@@ -67,7 +67,7 @@ export default function LoginPage() {
           <div className="text-center space-y-2">
             <p className="text-3xl">⛳</p>
             <h1 className="text-2xl font-bold text-white">Welcome back</h1>
-            <p className="text-sm text-white/60">Sign in to your GolfGives account</p>
+            <p className="text-sm text-white/90">Sign in to your GolfGives account</p>
           </div>
           <div className="space-y-3">
             <input
@@ -102,7 +102,7 @@ export default function LoginPage() {
               </span>
             ) : 'Sign In'}
           </button>
-          <p className="text-sm text-center text-white/50">
+          <p className="text-sm text-center text-white/80">
             Don&apos;t have an account?{' '}
             <Link href="/signup" className="text-green-400 font-medium hover:text-green-300 transition">Sign up</Link>
           </p>

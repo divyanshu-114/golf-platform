@@ -5,8 +5,8 @@ export default function BackButton({ label = '← Back', variant = 'light' }: { 
   const router = useRouter()
 
   const styles = variant === 'dark'
-    ? 'text-white/70 hover:text-white'
-    : 'text-gray-600 hover:text-black'
+    ? 'text-white hover:text-white'
+    : 'text-black hover:text-black'
 
   return (
     <button

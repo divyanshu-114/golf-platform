@@ -12,9 +12,9 @@ export default function PrizeSection() {
     <section id="prizes" className="py-24 bg-gray-50 px-6">
       <div className="max-w-5xl mx-auto space-y-16">
         <div className="text-center space-y-3">
-          <p className="text-xs uppercase tracking-widest text-gray-400 font-medium">Monthly draws</p>
+          <p className="text-xs uppercase tracking-widest text-black font-medium">Monthly draws</p>
           <h2 className="text-4xl font-bold">Three ways to win</h2>
-          <p className="text-gray-500 max-w-xl mx-auto">
+          <p className="text-black max-w-xl mx-auto">
             Your Stableford scores become your lucky numbers. Match enough and you win a share of that month&apos;s prize pool.
           </p>
         </div>
@@ -32,13 +32,13 @@ export default function PrizeSection() {
               <span className="text-4xl">{tier.icon}</span>
               <div>
                 <span className={`text-xs px-3 py-1 rounded-full font-medium
-                  ${i === 0 ? 'bg-white/10 text-white' : 'bg-gray-100 text-gray-600'}`}>
+                  ${i === 0 ? 'bg-white/10 text-white' : 'bg-gray-100 text-black'}`}>
                   {tier.tag}
                 </span>
               </div>
               <p className={`text-5xl font-bold ${i === 0 ? 'text-white' : 'text-black'}`}>{tier.share}</p>
-              <p className={`text-sm font-medium ${i === 0 ? 'text-gray-300' : 'text-gray-500'}`}>of monthly prize pool</p>
-              <p className={`text-sm ${i === 0 ? 'text-gray-400' : 'text-gray-500'}`}>{tier.label}</p>
+              <p className={`text-sm font-medium ${i === 0 ? 'text-gray-300' : 'text-black'}`}>of monthly prize pool</p>
+              <p className={`text-sm ${i === 0 ? 'text-black' : 'text-black'}`}>{tier.label}</p>
               {tier.rollover && (
                 <p className="text-xs text-amber-400 font-medium">🔁 Rolls over if unclaimed</p>
               )}
@@ -46,7 +46,7 @@ export default function PrizeSection() {
           ))}
         </div>
 
-        <p className="text-center text-xs text-gray-400">
+        <p className="text-center text-xs text-black">
           Prize pool grows with every subscriber. Split equally among multiple winners in the same tier.
         </p>
       </div>

@@ -22,12 +22,12 @@ export default function AdminSidebar() {
 
   return (
     <aside className="w-56 bg-white border-r flex flex-col py-8 px-4 fixed h-full z-10">
-      <p className="text-xs font-bold uppercase tracking-widest text-gray-500 px-3 mb-4">Admin Panel</p>
+      <p className="text-xs font-bold uppercase tracking-widest text-black px-3 mb-4">Admin Panel</p>
       <div className="space-y-1 flex-1">
         {navItems.map(({ href, label }) => (
           <Link key={href} href={href}
             className={`block px-3 py-2 rounded-xl text-sm font-medium transition
-              ${pathname === href ? 'bg-black text-white' : 'text-gray-600 hover:bg-gray-100'}`}>
+              ${pathname === href ? 'bg-black text-white' : 'text-black hover:bg-gray-100'}`}>
             {label}
           </Link>
         ))}

@@ -26,41 +26,9 @@ export async function getAuthUser(req: NextRequest) {
     }
   }
 
-  // 2. Try cookie-based approach — Supabase SSR stores the session in cookies
-  const allCookies = req.cookies.getAll()
-  const tokenCookies = allCookies
-    .filter(c => c.name.includes('auth-token'))
-    .sort((a, b) => a.name.localeCompare(b.name))
-
-  if (tokenCookies.length === 0) return null
-
-  const rawCookieValue = tokenCookies.map(c => c.value).join('')
-
-  if (!rawCookieValue) return null
-
-  // The cookie may be prefixed with "base64-" — strip it and decode
-  const base64Value = rawCookieValue.startsWith('base64-')
-    ? rawCookieValue.slice(7)
-    : rawCookieValue
-
-  try {
-    const decoded = Buffer.from(base64Value, 'base64').toString('utf-8')
-    const session = JSON.parse(decoded)
-    const jwt = session?.access_token
-
-    if (!jwt) return null
-
-    const { data: { user }, error } = await supabaseAdmin.auth.getUser(jwt)
-    if (error || !user) return null
-    return user
-  } catch {
-    // Maybe the cookie itself is a raw JWT (older Supabase versions)
-    try {
-      const { data: { user }, error } = await supabaseAdmin.auth.getUser(rawCookieValue)
-      if (error || !user) return null
-      return user
-    } catch {
-      return null
-    }
-  }
+  // 2. Try cookie-based approach using createClient which parses cookies automatically
+  const { createClient: createServerClient } = await import('@/lib/supabase/server')
+  const supabase = createServerClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  return user ?? null
 }

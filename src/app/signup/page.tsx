@@ -59,7 +59,7 @@ export default function SignupPage() {
           <div className="text-center space-y-2">
             <p className="text-3xl">⛳</p>
             <h1 className="text-2xl font-bold text-white">Create Account</h1>
-            <p className="text-sm text-white/60">Join GolfGives and start making a difference</p>
+            <p className="text-sm text-white/90">Join GolfGives and start making a difference</p>
           </div>
           <div className="space-y-3">
             <input
@@ -100,7 +100,7 @@ export default function SignupPage() {
               </span>
             ) : 'Sign Up'}
           </button>
-          <p className="text-sm text-center text-white/50">
+          <p className="text-sm text-center text-white/80">
             Already have an account?{' '}
             <Link href="/login" className="text-green-400 font-medium hover:text-green-300 transition">Log in</Link>
           </p>

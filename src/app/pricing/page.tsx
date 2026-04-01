@@ -39,14 +39,14 @@ export default function PricingPage() {
       <div className="max-w-4xl mx-auto mt-20 px-6">
         <BackButton />
         <h1 className="text-4xl font-bold text-center mb-4">Join the Platform</h1>
-        <p className="text-center text-gray-600 mb-12">Play. Win. Give Back.</p>
+        <p className="text-center text-black mb-12">Play. Win. Give Back.</p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Monthly */}
           <div className="border rounded-2xl p-8 space-y-4 hover:shadow-lg transition">
             <h2 className="text-xl font-semibold">Monthly</h2>
-            <p className="text-4xl font-bold">£9.99 <span className="text-base font-normal text-gray-500">/mo</span></p>
-            <ul className="text-sm text-gray-600 space-y-2">
+            <p className="text-4xl font-bold">£9.99 <span className="text-base font-normal text-black">/mo</span></p>
+            <ul className="text-sm text-black space-y-2">
               <li>✓ Enter monthly draws</li>
               <li>✓ Track your golf scores</li>
               <li>✓ Support your chosen charity</li>
@@ -64,8 +64,8 @@ export default function PricingPage() {
           <div className="border-2 border-black rounded-2xl p-8 space-y-4 relative hover:shadow-lg transition">
             <span className="absolute top-4 right-4 bg-black text-white text-xs px-2 py-1 rounded-full">Best Value</span>
             <h2 className="text-xl font-semibold">Yearly</h2>
-            <p className="text-4xl font-bold">£99.99 <span className="text-base font-normal text-gray-500">/yr</span></p>
-            <ul className="text-sm text-gray-600 space-y-2">
+            <p className="text-4xl font-bold">£99.99 <span className="text-base font-normal text-black">/yr</span></p>
+            <ul className="text-sm text-black space-y-2">
               <li>✓ Everything in Monthly</li>
               <li>✓ 2 months free</li>
               <li>✓ Priority winner verification</li>

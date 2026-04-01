@@ -95,21 +95,21 @@ export default function ScoreEntry() {
         <div className="flex justify-between items-center">
           <h2 className="text-lg font-semibold">Your Scores</h2>
           {avgScore && (
-            <span className="text-sm text-gray-500">Avg: <strong>{avgScore}</strong></span>
+            <span className="text-sm text-black">Avg: <strong>{avgScore}</strong></span>
           )}
         </div>
 
         {scores.length === 0 ? (
-          <p className="text-gray-500 text-sm">No scores yet. Add your first round below.</p>
+          <p className="text-black text-sm">No scores yet. Add your first round below.</p>
         ) : (
           <div className="space-y-2">
             {scores.map((s, i) => (
               <div key={s.id} className="flex items-center justify-between py-3 border-b last:border-0">
                 <div className="flex items-center gap-4">
-                  <span className="text-xs text-gray-500 w-4">{i + 1}</span>
+                  <span className="text-xs text-black w-4">{i + 1}</span>
                   <div>
                     <p className="font-semibold text-lg">{s.score} pts</p>
-                    <p className="text-xs text-gray-500">{formatDate(s.played_on)}</p>
+                    <p className="text-xs text-black">{formatDate(s.played_on)}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
@@ -131,7 +131,7 @@ export default function ScoreEntry() {
           </div>
         )}
 
-        <p className="text-xs text-gray-500">
+        <p className="text-xs text-black">
           {scores.length}/5 scores stored
           {scores.length === 5 && ' — adding a new score will remove the oldest'}
         </p>
@@ -143,7 +143,7 @@ export default function ScoreEntry() {
 
         <div className="grid grid-cols-2 gap-4">
           <div className="space-y-1">
-            <label className="text-sm text-gray-600">Stableford Score</label>
+            <label className="text-sm text-black">Stableford Score</label>
             <input
               type="number"
               min={1}
@@ -155,7 +155,7 @@ export default function ScoreEntry() {
             />
           </div>
           <div className="space-y-1">
-            <label className="text-sm text-gray-600">Date Played</label>
+            <label className="text-sm text-black">Date Played</label>
             <input
               type="date"
               value={playedOn}

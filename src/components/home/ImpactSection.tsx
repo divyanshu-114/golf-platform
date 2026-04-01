@@ -35,9 +35,9 @@ export default function ImpactSection() {
     <section className="py-24 bg-gradient-to-br from-gray-950 to-gray-900 text-white px-6">
       <div className="max-w-5xl mx-auto space-y-16">
         <div className="text-center space-y-3">
-          <p className="text-xs uppercase tracking-widest text-gray-500 font-medium">Our impact</p>
+          <p className="text-xs uppercase tracking-widest text-black font-medium">Our impact</p>
           <h2 className="text-4xl font-bold">Every swing counts</h2>
-          <p className="text-gray-400 max-w-xl mx-auto">
+          <p className="text-black max-w-xl mx-auto">
             Our subscribers don&apos;t just play — they give. Here&apos;s what we&apos;ve achieved together.
           </p>
         </div>
@@ -55,7 +55,7 @@ export default function ImpactSection() {
               <p className="text-4xl font-bold text-white">
                 <CountUp target={stat.value} prefix={stat.prefix} suffix={stat.suffix} />
               </p>
-              <p className="text-sm text-gray-400">{stat.label}</p>
+              <p className="text-sm text-black">{stat.label}</p>
             </motion.div>
           ))}
         </div>

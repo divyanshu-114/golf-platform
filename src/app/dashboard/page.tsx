@@ -16,7 +16,7 @@ export default function DashboardPage() {
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-gray-50 to-green-50">
       <div className="text-center space-y-3">
         <div className="animate-spin w-10 h-10 border-3 border-green-500 border-t-transparent rounded-full mx-auto" />
-        <p className="text-sm text-gray-600">Loading your dashboard...</p>
+        <p className="text-sm text-black">Loading your dashboard...</p>
       </div>
     </div>
   )
@@ -44,13 +44,13 @@ export default function DashboardPage() {
               <h1 className="text-4xl font-bold tracking-tight">
                 Welcome back, {firstName} 👋
               </h1>
-              <p className="text-gray-600 mt-2 text-sm">Here&apos;s your GolfGives overview</p>
+              <p className="text-black mt-2 text-sm">Here&apos;s your GolfGives overview</p>
             </div>
             <div className="hidden md:flex items-center gap-3">
               <div className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium ${
                 isActive
                   ? 'bg-green-50 text-green-700 border border-green-200'
-                  : 'bg-gray-100 text-gray-500 border border-gray-200'
+                  : 'bg-gray-100 text-black border border-gray-200'
               }`}>
                 <span className={`w-2 h-2 rounded-full ${isActive ? 'bg-green-500 animate-pulse' : 'bg-gray-400'}`} />
                 {isActive ? 'Active Member' : 'No Subscription'}
@@ -77,7 +77,7 @@ export default function DashboardPage() {
                 </div>
                 <div>
                   <p className="text-2xl font-bold">{stat.value}</p>
-                  <p className="text-xs text-gray-600">{stat.label}</p>
+                  <p className="text-xs text-black">{stat.label}</p>
                 </div>
               </div>
             </div>
@@ -102,7 +102,7 @@ export default function DashboardPage() {
             {/* Subscription */}
             <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
               <div className="px-6 pt-5 pb-1">
-                <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wider flex items-center gap-2">
+                <h2 className="text-sm font-semibold text-black uppercase tracking-wider flex items-center gap-2">
                   <span className="w-6 h-6 rounded-md bg-blue-50 flex items-center justify-center text-xs">💳</span>
                   Subscription
                 </h2>
@@ -118,7 +118,7 @@ export default function DashboardPage() {
             {/* Charity */}
             <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
               <div className="px-6 pt-5 pb-1">
-                <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wider flex items-center gap-2">
+                <h2 className="text-sm font-semibold text-black uppercase tracking-wider flex items-center gap-2">
                   <span className="w-6 h-6 rounded-md bg-green-50 flex items-center justify-center text-xs">💚</span>
                   Your Charity
                 </h2>
@@ -133,7 +133,7 @@ export default function DashboardPage() {
             {/* Winnings */}
             <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
               <div className="px-6 pt-5 pb-1">
-                <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wider flex items-center gap-2">
+                <h2 className="text-sm font-semibold text-black uppercase tracking-wider flex items-center gap-2">
                   <span className="w-6 h-6 rounded-md bg-amber-50 flex items-center justify-center text-xs">🏆</span>
                   Winnings
                 </h2>
@@ -143,7 +143,7 @@ export default function DashboardPage() {
 
             {/* Draw Eligibility */}
             <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl p-6 text-white shadow-lg">
-              <p className="text-xs text-gray-400 uppercase tracking-wider mb-3">Monthly Draw</p>
+              <p className="text-xs text-black uppercase tracking-wider mb-3">Monthly Draw</p>
               <div className="flex items-center gap-3 mb-4">
                 <div className={`w-12 h-12 rounded-xl flex items-center justify-center text-2xl ${
                   isActive ? 'bg-green-500/20' : 'bg-red-500/20'
@@ -152,13 +152,13 @@ export default function DashboardPage() {
                 </div>
                 <div>
                   <p className="font-semibold">{isActive ? 'You\'re eligible!' : 'Not eligible'}</p>
-                  <p className="text-xs text-gray-400">
+                  <p className="text-xs text-black">
                     {isActive ? 'Your scores are in the next draw' : 'Subscribe to enter draws'}
                   </p>
                 </div>
               </div>
               <div className="bg-white/10 rounded-xl p-3 text-center">
-                <p className="text-xs text-gray-400">Next draw</p>
+                <p className="text-xs text-black">Next draw</p>
                 <p className="font-bold text-lg">
                   End of {new Date().toLocaleDateString('en-GB', { month: 'long', year: 'numeric' })}
                 </p>
