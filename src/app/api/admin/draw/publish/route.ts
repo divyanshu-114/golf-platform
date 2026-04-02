@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { createClient } from '@/lib/supabase/server'
+import { requireAdmin } from '@/lib/adminGuard'
 import {
   generateRandomNumbers,
   generateAlgorithmicNumbers,
@@ -8,7 +8,9 @@ import {
 } from '@/lib/drawEngine'
 
 export async function POST(req: NextRequest) {
-  const supabase = createClient()
+  const { error, supabase } = await requireAdmin()
+  if (error) return error
+
   const { draw_id, mode } = await req.json()
 
   const { data: entries } = await supabase

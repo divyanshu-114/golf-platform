@@ -1,23 +1,20 @@
 import { NextResponse } from 'next/server'
-import { createClient } from '@/lib/supabase/server'
+import { requireAdmin } from '@/lib/adminGuard'
 
 export async function POST() {
-  const supabase = createClient()
-
-  // Check admin (add your own admin check)
-  const { data: { user } } = await supabase.auth.getUser()
-  if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  const { error: authError, supabase } = await requireAdmin()
+  if (authError) return authError
 
   const month = new Date()
   month.setDate(1) // First of current month
 
   // Create draw record
-  const { data: draw, error } = await supabase
+  const { data: draw, error: dbError } = await supabase
     .from('draws')
     .insert({ month: month.toISOString(), status: 'pending' })
     .select().single()
 
-  if (error) return NextResponse.json({ error: error.message }, { status: 500 })
+  if (dbError) return NextResponse.json({ error: dbError.message }, { status: 500 })
 
   // Snapshot all active subscribers' scores into draw_entries
   const { data: activeUsers } = await supabase

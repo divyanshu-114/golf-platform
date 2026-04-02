@@ -1,9 +1,10 @@
 'use client'
-import { useState } from 'react'
-import { createClient } from '@/lib/supabase/client'
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import dynamic from 'next/dynamic'
 import BackButton from '@/components/BackButton'
+import { createClient } from '@/lib/supabase/client'
+import { useRouter } from 'next/navigation'
 
 const GolfBallScene = dynamic(() => import('@/components/three/GolfBallScene'), { ssr: false })
 
@@ -13,12 +14,37 @@ export default function SignupPage() {
   const [fullName, setFullName] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+  const router = useRouter()
+  const supabase = createClient()
+
+  useEffect(() => {
+    let active = true
+
+    const redirectAuthenticatedUser = async () => {
+      const { data } = await supabase.auth.getSession()
+      if (!active || !data.session?.user) return
+
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('role')
+        .eq('id', data.session.user.id)
+        .single()
+
+      router.replace(profile?.role === 'admin' ? '/admin' : '/dashboard')
+    }
+
+    void redirectAuthenticatedUser()
+
+    return () => {
+      active = false
+    }
+  }, [router, supabase])
 
   const handleSignup = async () => {
     setError('')
     setLoading(true)
 
-    // Step 1: Create user via admin API (bypasses email rate limits)
+    // Step 1: Create user via the standard signup endpoint
     const res = await fetch('/api/auth/signup', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -31,17 +57,8 @@ export default function SignupPage() {
       return setError(result.error)
     }
 
-    // Step 2: Sign in immediately with the newly created credentials
-    const supabase = createClient()
-    const { error: loginError } = await supabase.auth.signInWithPassword({ email, password })
-
-    if (loginError) {
-      setLoading(false)
-      return setError('Account created, but auto-login failed. Please go to the login page.')
-    }
-
-    // Step 3: Hard redirect to dashboard
-    window.location.href = '/dashboard'
+    setLoading(false)
+    router.replace('/login?signup=success')
   }
 
   return (

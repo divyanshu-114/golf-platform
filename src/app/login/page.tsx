@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
@@ -7,6 +7,7 @@ import dynamic from 'next/dynamic'
 import BackButton from '@/components/BackButton'
 
 const GolfBallScene = dynamic(() => import('@/components/three/GolfBallScene'), { ssr: false })
+const ADMIN_EMAIL = process.env.NEXT_PUBLIC_ADMIN_EMAIL?.toLowerCase() ?? ''
 
 function friendlyError(msg: string): string {
   if (msg.toLowerCase().includes('invalid')) return 'Invalid email or password.'
@@ -21,6 +22,29 @@ export default function LoginPage() {
   const router = useRouter()
   const supabase = createClient()
 
+  useEffect(() => {
+    let active = true
+
+    const redirectAuthenticatedUser = async () => {
+      const { data } = await supabase.auth.getSession()
+      if (!active || !data.session?.user) return
+
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('role')
+        .eq('id', data.session.user.id)
+        .single()
+
+      router.replace(profile?.role === 'admin' ? '/admin' : '/dashboard')
+    }
+
+    void redirectAuthenticatedUser()
+
+    return () => {
+      active = false
+    }
+  }, [router, supabase])
+
   const handleLogin = async () => {
     setError('')
     setLoading(true)
@@ -31,8 +55,8 @@ export default function LoginPage() {
     }
 
     if (authData?.user) {
-      if (email.toLowerCase() === 'divyanshu.test.web@gmail.com') {
-        window.location.href = '/admin'
+      if (ADMIN_EMAIL && email.toLowerCase() === ADMIN_EMAIL) {
+        router.replace('/admin')
         return
       }
 
@@ -43,13 +67,12 @@ export default function LoginPage() {
         .single()
 
       if (profile?.role === 'admin') {
-        window.location.href = '/admin'
+        router.replace('/admin')
         return
       }
     }
 
-    // Hard redirect to force a completely fresh server-side render with the brand new cookie
-    window.location.href = '/dashboard'
+    router.replace('/dashboard')
   }
 
   return (
