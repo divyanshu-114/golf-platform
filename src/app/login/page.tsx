@@ -3,10 +3,9 @@ import { useEffect, useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import dynamic from 'next/dynamic'
+import Image from 'next/image'
 import BackButton from '@/components/BackButton'
 
-const GolfBallScene = dynamic(() => import('@/components/three/GolfBallScene'), { ssr: false })
 const ADMIN_EMAIL = process.env.NEXT_PUBLIC_ADMIN_EMAIL?.toLowerCase() ?? ''
 
 function friendlyError(msg: string): string {
@@ -76,58 +75,66 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* 3D Background */}
-      <GolfBallScene variant="dark" />
-      <div className="absolute inset-0 bg-black/40" style={{ zIndex: 1 }} />
+    <div className="relative min-h-screen flex items-center justify-center overflow-hidden bg-charcoal">
+      {/* Background Image */}
+      <div className="absolute inset-0 z-0">
+        <Image
+          src="/images/hero-golfer.png"
+          alt="Golf resort sunset"
+          fill
+          className="object-cover opacity-40"
+          priority
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-charcoal/80 via-charcoal/60 to-charcoal" />
+      </div>
 
       {/* Login Card */}
       <div className="relative z-10 w-full max-w-md mx-4">
-        <div className="mb-4">
-          <BackButton label="← Back to Home" variant="dark" />
+        <div className="mb-6">
+          <BackButton label="Back to Home" variant="dark" />
         </div>
-        <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-3xl p-8 space-y-6 shadow-2xl">
-          <div className="text-center space-y-2">
-            <p className="text-3xl">⛳</p>
-            <h1 className="text-2xl font-bold text-white">Welcome back</h1>
-            <p className="text-sm text-white/90">Sign in to your GolfGives account</p>
+        <div className="bg-charcoal/80 backdrop-blur-xl border border-white/10 rounded-2xl p-8 space-y-8 shadow-2xl">
+          <div className="text-center space-y-3">
+            <h1 className="font-heading text-3xl text-white tracking-wide">Welcome Back</h1>
+            <p className="text-cream/70 font-light">Sign in to your Almaris account</p>
           </div>
-          <div className="space-y-3">
+          
+          <div className="space-y-4">
             <input
-              className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-sm text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-green-400/50 focus:border-transparent backdrop-blur-sm"
-              placeholder="Email"
+              className="w-full bg-white/5 border border-white/10 rounded-none px-4 py-3.5 text-sm text-white placeholder-white/40 focus:outline-none focus:border-olive focus:bg-white/10 transition-colors"
+              placeholder="Email Address"
               type="email"
               value={email}
               onChange={e => setEmail(e.target.value)}
             />
             <input
-              className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-sm text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-green-400/50 focus:border-transparent backdrop-blur-sm"
+              className="w-full bg-white/5 border border-white/10 rounded-none px-4 py-3.5 text-sm text-white placeholder-white/40 focus:outline-none focus:border-olive focus:bg-white/10 transition-colors"
               type="password"
               placeholder="Password"
               value={password}
               onChange={e => setPassword(e.target.value)}
             />
           </div>
+
           {error && (
-            <p className="text-red-300 text-sm bg-red-500/10 border border-red-500/20 rounded-xl px-4 py-2">
+            <p className="text-red-400 text-sm bg-red-900/20 border border-red-500/20 p-3">
               {error}
             </p>
           )}
+
           <button
             onClick={handleLogin}
             disabled={loading || !email || !password}
-            className="w-full bg-gradient-to-r from-green-500 to-emerald-600 text-white py-3 rounded-xl font-medium hover:from-green-600 hover:to-emerald-700 disabled:opacity-50 transition-all shadow-lg shadow-green-500/25"
+            className="w-full bg-olive text-cream py-3.5 text-sm uppercase tracking-widest hover:bg-[#7a8c54] disabled:opacity-50 transition-colors border border-olive"
           >
-            {loading ? (
-              <span className="flex items-center justify-center gap-2">
-                <span className="animate-spin w-4 h-4 border-2 border-white border-t-transparent rounded-full" />
-                Signing in...
-              </span>
-            ) : 'Sign In'}
+            {loading ? 'Authenticating...' : 'Sign In'}
           </button>
-          <p className="text-sm text-center text-white/80">
+
+          <p className="text-sm text-center text-cream/70 font-light pt-2">
             Don&apos;t have an account?{' '}
-            <Link href="/signup" className="text-green-400 font-medium hover:text-green-300 transition">Sign up</Link>
+            <Link href="/signup" className="text-olive hover:text-white transition-colors border-b border-olive/30 pb-0.5">
+              Create Account
+            </Link>
           </p>
         </div>
       </div>

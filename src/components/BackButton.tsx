@@ -5,15 +5,16 @@ export default function BackButton({ label = '← Back', variant = 'light' }: { 
   const router = useRouter()
 
   const styles = variant === 'dark'
-    ? 'text-white hover:text-white'
-    : 'text-black hover:text-black'
+    ? 'text-white hover:text-cream'
+    : 'text-charcoal hover:text-olive'
 
   return (
     <button
       onClick={() => router.back()}
-      className={`text-sm transition flex items-center gap-1 mb-4 ${styles}`}
+      className={`text-sm font-medium transition-colors flex items-center gap-2 mb-4 group ${styles}`}
     >
-      {label}
+      <span className="group-hover:-translate-x-1 transition-transform">←</span>
+      {label.replace('← ', '')}
     </button>
   )
 }

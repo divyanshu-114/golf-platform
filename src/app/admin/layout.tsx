@@ -16,7 +16,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   }
 
   return (
-    <div className="flex min-h-screen bg-gray-50">
+    <div className="flex min-h-screen bg-[#F9F8F3]">
       {/* Client-side Sidebar for Active Navigation */}
       <AdminSidebar />
 

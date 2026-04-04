@@ -28,34 +28,38 @@ export default function WinningsCard({ winners }: Props) {
     .reduce((sum, w) => sum + w.prize_amount, 0)
 
   return (
-    <div className="bg-white rounded-2xl border p-6 space-y-4">
-      <div className="flex justify-between items-center">
-        <p className="text-xs text-black uppercase tracking-wide">Winnings</p>
-        <p className="text-sm font-bold text-green-600">£{total.toFixed(2)} total paid</p>
+    <div className="bg-cream/20 rounded-none border border-charcoal/10 p-6 space-y-6">
+      <div className="flex justify-between items-end border-b border-charcoal/10 pb-4">
+        <p className="text-xs text-charcoal/60 uppercase tracking-widest font-semibold">Winnings</p>
+        <p className="text-xl font-heading text-olive">£{total.toFixed(2)}</p>
       </div>
 
       {winners.length === 0 ? (
-        <p className="text-black text-sm">No winnings yet — keep playing!</p>
+        <div className="text-center py-8">
+          <p className="text-3xl mb-3">🏌️</p>
+          <p className="text-charcoal/60 text-sm font-medium tracking-widest uppercase">No Winnings Yet</p>
+          <p className="text-xs text-charcoal/40 mt-1">Keep playing and logging scores!</p>
+        </div>
       ) : (
-        <div className="space-y-3">
+        <div className="space-y-4">
           {winners.map(w => (
-            <div key={w.id} className="flex items-center justify-between text-sm border-b pb-3 last:border-0">
+            <div key={w.id} className="flex justify-between items-center border border-charcoal/10 bg-cream/30 p-4">
               <div>
-                <p className="font-medium">{tierLabel(w.tier)}</p>
-                <p className="text-xs text-black">
-                  {new Date(w.draws.month).toLocaleDateString('en-GB', { month: 'long', year: 'numeric' })}
+                <p className="font-heading text-lg text-olive border-b border-olive/20 inline-block mb-1">
+                  £{w.prize_amount.toFixed(2)}
+                </p>
+                <p className="text-xs text-charcoal/60 uppercase tracking-widest">
+                  {new Date(w.draws.month).toLocaleDateString('en-GB', { month: 'short', year: 'numeric' })}
                 </p>
               </div>
-              <div className="text-right space-y-1">
-                <p className="font-semibold">£{w.prize_amount.toFixed(2)}</p>
-                <div className="flex gap-1 justify-end">
-                  <span className={`text-xs px-2 py-0.5 rounded-full ${verifyBadge[w.verification_status]}`}>
-                    {w.verification_status}
-                  </span>
-                  <span className={`text-xs px-2 py-0.5 rounded-full ${payoutBadge[w.payout_status]}`}>
-                    {w.payout_status}
-                  </span>
-                </div>
+              <div className="text-right">
+                <span className={`text-xs font-semibold px-3 py-1 uppercase tracking-widest border ${
+                  w.payout_status === 'paid' 
+                    ? 'bg-olive/10 text-olive border-olive/20' 
+                    : 'bg-yellow-100/50 text-yellow-800 border-yellow-200/50'
+                }`}>
+                  {w.payout_status}
+                </span>
               </div>
             </div>
           ))}

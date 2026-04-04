@@ -21,53 +21,57 @@ export default function AdminWinners() {
   const tierLabel = (t: number) => t === 5 ? '🏆 Jackpot' : t === 4 ? '🥈 4-Match' : '🥉 3-Match'
 
   return (
-    <div className="space-y-6">
-      <h1 className="text-2xl font-bold">Winners Management</h1>
+    <div className="space-y-8 max-w-6xl">
+      <div className="border-b border-charcoal/10 pb-4">
+        <h1 className="font-heading text-3xl text-charcoal">Winners Management</h1>
+      </div>
 
-      <div className="bg-white rounded-2xl border overflow-hidden">
+      <div className="bg-white border border-charcoal/10 overflow-hidden shadow-sm">
         <table className="w-full text-sm">
-          <thead className="bg-gray-50 text-black uppercase text-xs">
+          <thead className="bg-charcoal/5 text-charcoal/60 uppercase tracking-widest text-[10px] font-medium border-b border-charcoal/10">
             <tr>
               {['User', 'Draw', 'Tier', 'Prize', 'Verification', 'Payout', 'Actions'].map(h => (
-                <th key={h} className="text-left px-4 py-3 font-medium">{h}</th>
+                <th key={h} className="text-left px-6 py-4">{h}</th>
               ))}
             </tr>
           </thead>
           <tbody>
             {winners.map(w => (
-              <tr key={w.id} className="border-t hover:bg-gray-50">
-                <td className="px-4 py-3 font-medium">{w.profiles?.full_name ?? '—'}</td>
-                <td className="px-4 py-3 text-black">
+              <tr key={w.id} className="border-b border-charcoal/5 hover:bg-cream/30 transition-colors last:border-0">
+                <td className="px-6 py-4 font-medium text-charcoal">{w.profiles?.full_name ?? '—'}</td>
+                <td className="px-6 py-4 text-charcoal/70 uppercase tracking-widest text-[10px] font-bold">
                   {new Date(w.draws?.month).toLocaleDateString('en-GB', { month: 'short', year: 'numeric' })}
                 </td>
-                <td className="px-4 py-3">{tierLabel(w.tier)}</td>
-                <td className="px-4 py-3 font-semibold">£{w.prize_amount?.toFixed(2)}</td>
-                <td className="px-4 py-3">
+                <td className="px-6 py-4 font-heading text-lg text-olive">{tierLabel(w.tier)}</td>
+                <td className="px-6 py-4 font-heading text-xl text-charcoal">£{w.prize_amount?.toFixed(2)}</td>
+                <td className="px-6 py-4">
                   <select
                     value={w.verification_status}
                     onChange={e => update(w.id, { verification_status: e.target.value })}
-                    className="border rounded-lg px-2 py-1 text-xs focus:outline-none"
+                    className="border border-charcoal/20 bg-white rounded-none px-3 py-1 text-xs uppercase tracking-widest font-medium focus:outline-none focus:border-olive text-charcoal"
                   >
                     <option value="pending">Pending</option>
                     <option value="approved">Approved</option>
                     <option value="rejected">Rejected</option>
                   </select>
                 </td>
-                <td className="px-4 py-3">
+                <td className="px-6 py-4">
                   <select
                     value={w.payout_status}
                     onChange={e => update(w.id, { payout_status: e.target.value })}
-                    className="border rounded-lg px-2 py-1 text-xs focus:outline-none"
+                    className="border border-charcoal/20 bg-white rounded-none px-3 py-1 text-xs uppercase tracking-widest font-medium focus:outline-none focus:border-olive text-charcoal"
                   >
                     <option value="pending">Pending</option>
                     <option value="paid">Paid</option>
                   </select>
                 </td>
-                <td className="px-4 py-3">
-                  {w.proof_url && (
-                    <a href={w.proof_url} target="_blank" className="text-xs text-blue-500 hover:underline">
+                <td className="px-6 py-4">
+                  {w.proof_url ? (
+                    <a href={w.proof_url} target="_blank" className="text-[10px] uppercase tracking-widest font-bold text-olive hover:underline transition-colors block mt-1">
                       View Proof
                     </a>
+                  ) : (
+                    <span className="text-charcoal/40 text-[10px] uppercase tracking-widest block mt-1">—</span>
                   )}
                 </td>
               </tr>
@@ -75,7 +79,9 @@ export default function AdminWinners() {
           </tbody>
         </table>
         {winners.length === 0 && (
-          <p className="text-center text-black py-8">No winners yet.</p>
+          <div className="text-center py-12">
+            <p className="text-charcoal/60 text-sm uppercase tracking-widest font-medium">No winners yet.</p>
+          </div>
         )}
       </div>
     </div>

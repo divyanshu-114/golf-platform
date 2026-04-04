@@ -1,26 +1,63 @@
 @import "tailwindcss";
 
 :root {
+  --color-olive: #8DA067;
+  --color-olive-dark: #6b7d4e;
+  --color-charcoal: #1b1b1b;
+  --color-charcoal-light: #2a2a2a;
+  --color-cream: #f0edd4;
+  --color-cream-light: #f5f3e8;
+  --color-sand: #e8e4d0;
+  --color-gold: #c9a96e;
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #1b1b1b;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-olive: #8DA067;
+  --color-olive-dark: #6b7d4e;
+  --color-charcoal: #1b1b1b;
+  --color-charcoal-light: #2a2a2a;
+  --color-cream: #f0edd4;
+  --color-cream-light: #f5f3e8;
+  --color-sand: #e8e4d0;
+  --color-gold: #c9a96e;
+  --font-sans: var(--font-jost);
+  --font-serif: var(--font-marcellus);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), system-ui, sans-serif;
+}
+
+/* Serif heading utility */
+.font-heading {
+  font-family: var(--font-serif), 'Georgia', serif;
+}
+
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-cream-light);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-olive);
+  border-radius: 4px;
+}
+
+/* Booking bar date input styling */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+  cursor: pointer;
 }

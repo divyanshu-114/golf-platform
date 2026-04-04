@@ -36,11 +36,11 @@ export default function DrawResults({ userId }: { userId: string }) {
   }, [userId])
 
   return (
-    <div className="bg-white rounded-2xl border p-6 space-y-4">
-      <h2 className="text-lg font-semibold">Recent Draws</h2>
+    <div className="bg-white border border-charcoal/10 p-6 space-y-5">
+      <h2 className="font-heading text-xl text-charcoal border-b border-charcoal/5 pb-3">Recent Draws</h2>
 
       {draws.length === 0 ? (
-        <p className="text-black text-sm">No draws published yet.</p>
+        <p className="text-charcoal/60 text-sm">No draws published yet.</p>
       ) : (
         <div className="space-y-4">
           {draws.map(draw => {
@@ -50,30 +50,29 @@ export default function DrawResults({ userId }: { userId: string }) {
               : null
 
             return (
-              <div key={draw.id} className="border rounded-xl p-4 space-y-3">
-                <div className="flex justify-between items-center">
-                  <p className="font-medium">
+              <div key={draw.id} className="border border-charcoal/10 p-5 space-y-4 bg-cream/30">
+                <div className="flex justify-between items-center border-b border-charcoal/5 pb-3">
+                  <p className="font-medium text-charcoal">
                     {new Date(draw.month).toLocaleDateString('en-GB', { month: 'long', year: 'numeric' })}
                   </p>
                   {matches !== null && (
-                    <span className={`text-xs font-semibold px-3 py-1 rounded-full ${
-                      matches >= 5 ? 'bg-yellow-100 text-yellow-700' :
-                      matches >= 4 ? 'bg-blue-100 text-blue-700' :
-                      matches >= 3 ? 'bg-green-100 text-green-700' :
-                      'bg-gray-100 text-black'
+                    <span className={`text-xs font-semibold px-3 py-1 uppercase tracking-widest ${
+                      matches >= 5 ? 'bg-yellow-100 text-yellow-800' :
+                      matches >= 4 ? 'bg-slate-200 text-slate-800' :
+                      matches >= 3 ? 'bg-orange-100 text-orange-800' :
+                      'bg-charcoal/5 text-charcoal/60'
                     }`}>
                       {matches >= 3 ? `🏅 ${matches} Matches!` : `${matches} Matches`}
                     </span>
                   )}
                 </div>
 
-                {/* Winning Numbers */}
                 <div>
-                  <p className="text-xs text-black mb-2">Winning Numbers</p>
+                  <p className="text-xs text-charcoal/60 uppercase tracking-widest mb-3">Winning Numbers</p>
                   <div className="flex gap-2">
                     {draw.winning_numbers?.map((n: number) => (
-                      <div key={n} className={`w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold
-                        ${userNums.includes(n) ? 'bg-black text-white' : 'bg-gray-100 text-black'}`}>
+                      <div key={n} className={`w-10 h-10 flex items-center justify-center text-sm font-bold border
+                        ${userNums.includes(n) ? 'bg-olive text-cream border-olive' : 'bg-white text-charcoal border-charcoal/10'}`}>
                         {n}
                       </div>
                     ))}
@@ -83,11 +82,11 @@ export default function DrawResults({ userId }: { userId: string }) {
                 {/* User's numbers */}
                 {userNums.length > 0 && (
                   <div>
-                    <p className="text-xs text-black mb-2">Your Numbers</p>
+                    <p className="text-xs text-charcoal/60 uppercase tracking-widest mb-3">Your Numbers</p>
                     <div className="flex gap-2">
                       {userNums.map((n: number) => (
-                        <div key={n} className={`w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold border-2
-                          ${draw.winning_numbers?.includes(n) ? 'border-black text-black' : 'border-gray-200 text-black'}`}>
+                        <div key={n} className={`w-10 h-10 flex items-center justify-center text-sm font-bold border
+                          ${draw.winning_numbers?.includes(n) ? 'bg-charcoal text-white border-charcoal' : 'bg-transparent text-charcoal border-charcoal/20'}`}>
                           {n}
                         </div>
                       ))}
@@ -96,9 +95,9 @@ export default function DrawResults({ userId }: { userId: string }) {
                 )}
 
                 {draw.jackpot_rollover > 0 && (
-                  <p className="text-xs text-amber-600 font-medium">
+                  <div className="bg-olive/10 border border-olive/20 p-3 pt-3 mt-4 text-xs font-medium text-olive">
                     🔁 Jackpot rolled over: £{draw.jackpot_rollover.toFixed(2)} added to next month
-                  </p>
+                  </div>
                 )}
               </div>
             )

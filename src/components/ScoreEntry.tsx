@@ -100,28 +100,28 @@ export default function ScoreEntry() {
         </div>
 
         {scores.length === 0 ? (
-          <p className="text-black text-sm">No scores yet. Add your first round below.</p>
+          <p className="text-charcoal/60 text-sm italic">No scores yet. Add your first round below.</p>
         ) : (
           <div className="space-y-2">
             {scores.map((s, i) => (
-              <div key={s.id} className="flex items-center justify-between py-3 border-b last:border-0">
+              <div key={s.id} className="flex items-center justify-between py-3 border-b border-charcoal/5 last:border-0">
                 <div className="flex items-center gap-4">
-                  <span className="text-xs text-black w-4">{i + 1}</span>
+                  <span className="text-xs text-charcoal/40 w-4">{i + 1}</span>
                   <div>
-                    <p className="font-semibold text-lg">{s.score} pts</p>
-                    <p className="text-xs text-black">{formatDate(s.played_on)}</p>
+                    <p className="font-bold text-lg text-charcoal">{s.score} pts</p>
+                    <p className="text-xs text-charcoal/60">{formatDate(s.played_on)}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
-                  <div className="w-24 h-2 bg-gray-100 rounded-full overflow-hidden">
+                  <div className="w-24 h-1 bg-charcoal/5 rounded-full overflow-hidden">
                     <div
-                      className="h-full bg-black rounded-full"
-                      style={{ width: `${(s.score / 45) * 100}%` }}
+                      className="h-full bg-olive rounded-full"
+                      style={{ width: `${(s.score / 54) * 100}%` }}
                     />
                   </div>
                   <button
                     onClick={() => handleDelete(s.id)}
-                    className="text-xs text-red-400 hover:text-red-600"
+                    className="text-[10px] uppercase tracking-widest text-charcoal/40 hover:text-red-600"
                   >
                     Remove
                   </button>
@@ -130,52 +130,51 @@ export default function ScoreEntry() {
             ))}
           </div>
         )}
-
-        <p className="text-xs text-black">
-          {scores.length}/5 scores stored
-          {scores.length === 5 && ' — adding a new score will remove the oldest'}
-        </p>
       </div>
 
       {/* Add Score Form */}
-      <div className="bg-white rounded-2xl border p-6 space-y-4">
-        <h2 className="text-lg font-semibold">Add New Score</h2>
+      <div className="bg-white rounded-none border border-charcoal/10 p-6 space-y-4">
+        <h2 className="text-sm uppercase tracking-[0.2em] text-charcoal font-medium">Add New Score</h2>
 
         <div className="grid grid-cols-2 gap-4">
-          <div className="space-y-1">
-            <label className="text-sm text-black">Stableford Score</label>
-            <input
-              type="number"
-              min={1}
-              max={45}
-              value={newScore}
-              onChange={e => setNewScore(e.target.value)}
-              placeholder="e.g. 36"
-              className="w-full border rounded-xl px-4 py-3 text-lg font-semibold focus:outline-none focus:ring-2 focus:ring-black"
-            />
-          </div>
-          <div className="space-y-1">
-            <label className="text-sm text-black">Date Played</label>
-            <input
-              type="date"
-              value={playedOn}
-              max={new Date().toISOString().split('T')[0]}
-              onChange={e => setPlayedOn(e.target.value)}
-              className="w-full border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-black"
-            />
-          </div>
+          <input
+            type="number"
+            min="0"
+            max="54"
+            placeholder="Stableford Score"
+            value={newScore}
+            onChange={e => setNewScore(e.target.value)}
+            className="bg-white border border-charcoal/10 rounded-none px-4 py-3 text-sm text-charcoal focus:outline-none focus:border-olive transition-colors"
+          />
+          <input
+            type="date"
+            value={playedOn}
+            max={new Date().toISOString().split('T')[0]}
+            onChange={e => setPlayedOn(e.target.value)}
+            className="bg-white border border-charcoal/10 rounded-none px-4 py-3 text-sm text-charcoal focus:outline-none focus:border-olive transition-colors"
+          />
         </div>
 
-        {error && <p className="text-red-500 text-sm">{error}</p>}
-        {success && <p className="text-green-600 text-sm">{success}</p>}
+        {error && (
+          <p className="text-red-400 text-sm bg-red-900/5 border border-red-500/20 p-3">{error}</p>
+        )}
+        {success && (
+          <p className="text-olive text-sm bg-olive/10 border border-olive/20 p-3">{success}</p>
+        )}
 
-        <button
-          onClick={handleSubmit}
-          disabled={loading}
-          className="w-full bg-black text-white py-3 rounded-xl font-medium hover:bg-gray-800 disabled:opacity-50 transition"
-        >
-          {loading ? 'Saving...' : 'Add Score'}
-        </button>
+        {scores.length >= 5 ? (
+          <div className="bg-charcoal text-cream p-4 text-sm font-medium border border-charcoal text-center mt-6">
+            🏌️ You&apos;ve entered 5 scores. Maximum reached.
+          </div>
+        ) : (
+          <button
+            onClick={handleSubmit}
+            disabled={loading || !newScore || !playedOn}
+            className="w-full bg-olive text-cream font-medium tracking-widest uppercase text-xs py-4 hover:bg-[#7a8c54] disabled:opacity-50 transition-colors border border-olive disabled:cursor-not-allowed"
+          >
+            {loading ? 'Saving...' : 'Add Score'}
+          </button>
+        )}
       </div>
     </div>
   )

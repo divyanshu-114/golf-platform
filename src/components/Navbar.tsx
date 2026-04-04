@@ -16,12 +16,10 @@ export default function Navbar() {
   useEffect(() => {
     const supabase = createClient()
 
-    // Use getSession (reads local JWT token — no server round-trip)
     supabase.auth.getSession().then(({ data }: { data: { session: Session | null } }) => {
       setUser(data.session?.user ?? null)
     })
 
-    // Listen for auth state changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       (_event: AuthChangeEvent, session: Session | null) => {
         setUser(session?.user ?? null)
@@ -48,51 +46,92 @@ export default function Navbar() {
   const isDashboard = pathname?.startsWith('/dashboard')
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300
-      ${scrolled || isDashboard ? 'bg-white/95 backdrop-blur-md shadow-sm border-b border-gray-100' : 'bg-transparent'}`}>
-      <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-        <Link href="/" className="font-bold text-xl tracking-tight">⛳ GolfGives</Link>
-
-        {/* Desktop Nav */}
-        <div className="hidden md:flex items-center gap-6 text-sm">
-          <Link href="/charities" className="text-black hover:text-black transition">Charities</Link>
-          <Link href="/#how-it-works" className="text-black hover:text-black transition">How It Works</Link>
-          <Link href="/#prizes" className="text-black hover:text-black transition">Prizes</Link>
+    <nav
+      id="main-nav"
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        scrolled || isDashboard
+          ? 'bg-charcoal/95 backdrop-blur-md shadow-lg'
+          : 'bg-charcoal'
+      }`}
+    >
+      <div className="max-w-7xl mx-auto px-6 lg:px-10 h-20 flex items-center justify-between">
+        {/* Left nav links */}
+        <div className="hidden md:flex items-center gap-8 text-sm tracking-wider">
+          <Link
+            href="/"
+            className="text-white/80 hover:text-white transition-colors duration-300 uppercase text-xs font-medium"
+          >
+            Home
+          </Link>
+          <Link
+            href="#accommodation"
+            className="text-white/80 hover:text-white transition-colors duration-300 uppercase text-xs font-medium"
+          >
+            Accommodation
+          </Link>
+          <Link
+            href="#amenities"
+            className="text-white/80 hover:text-white transition-colors duration-300 uppercase text-xs font-medium"
+          >
+            Facilities
+          </Link>
         </div>
 
-        <div className="flex items-center gap-3">
+        {/* Center logo */}
+        <Link href="/" className="absolute left-1/2 -translate-x-1/2 flex flex-col items-center">
+          <span className="font-heading text-white text-2xl md:text-3xl tracking-[0.3em] uppercase">
+            GolfGives
+          </span>
+          <span className="flex gap-1 mt-0.5">
+            {[...Array(5)].map((_, i) => (
+              <span key={i} className="text-gold text-[8px]">★</span>
+            ))}
+          </span>
+        </Link>
+
+        {/* Right section */}
+        <div className="flex items-center gap-4">
           {user ? (
             <>
-              <span className="hidden md:block text-xs text-black mr-1">
+              <span className="hidden lg:block text-xs text-white/60 mr-1">
                 {user.email}
               </span>
               {!isDashboard && (
-                <Link href="/dashboard"
-                  className="bg-black text-white text-sm px-4 py-2 rounded-full hover:bg-gray-800 transition">
+                <Link
+                  href="/dashboard"
+                  className="hidden md:inline-block text-white/80 hover:text-white text-xs uppercase tracking-wider transition-colors"
+                >
                   Dashboard
                 </Link>
               )}
               <button
                 onClick={handleLogout}
                 disabled={loggingOut}
-                className="text-sm bg-red-50 text-red-600 px-4 py-2 rounded-full hover:bg-red-100 transition disabled:opacity-50 font-medium"
+                className="text-xs text-white/60 hover:text-white transition-colors disabled:opacity-50 uppercase tracking-wider"
               >
                 {loggingOut ? '...' : 'Logout'}
               </button>
             </>
           ) : (
             <>
-              <Link href="/login" className="text-sm text-black hover:text-black transition">Log in</Link>
-              <Link href="/pricing"
-                className="bg-black text-white text-sm px-4 py-2 rounded-full hover:bg-gray-800 transition">
-                Get Started
+              <Link
+                href="/login"
+                className="hidden md:inline-block text-white/80 hover:text-white text-xs uppercase tracking-wider transition-colors"
+              >
+                Log in
+              </Link>
+              <Link
+                href="/pricing"
+                className="border border-olive text-olive hover:bg-olive hover:text-white text-xs px-6 py-2.5 uppercase tracking-widest transition-all duration-300"
+              >
+                Reservation
               </Link>
             </>
           )}
 
           {/* Mobile hamburger */}
           <button className="md:hidden p-1" onClick={() => setMenuOpen(!menuOpen)}>
-            <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2">
+            <svg width="24" height="24" fill="none" stroke="white" strokeWidth="1.5">
               {menuOpen ? (
                 <path d="M6 6l12 12M6 18L18 6" />
               ) : (
@@ -105,10 +144,11 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       {menuOpen && (
-        <div className="md:hidden bg-white border-t px-6 py-4 space-y-3">
-          <Link href="/charities" className="block text-sm text-black" onClick={() => setMenuOpen(false)}>Charities</Link>
-          <Link href="/#how-it-works" className="block text-sm text-black" onClick={() => setMenuOpen(false)}>How It Works</Link>
-          <Link href="/#prizes" className="block text-sm text-black" onClick={() => setMenuOpen(false)}>Prizes</Link>
+        <div className="md:hidden bg-charcoal border-t border-white/10 px-6 py-6 space-y-4">
+          <Link href="/" className="block text-sm text-white/80 uppercase tracking-wider" onClick={() => setMenuOpen(false)}>Home</Link>
+          <Link href="#accommodation" className="block text-sm text-white/80 uppercase tracking-wider" onClick={() => setMenuOpen(false)}>Accommodation</Link>
+          <Link href="#amenities" className="block text-sm text-white/80 uppercase tracking-wider" onClick={() => setMenuOpen(false)}>Facilities</Link>
+          <Link href="/charities" className="block text-sm text-white/80 uppercase tracking-wider" onClick={() => setMenuOpen(false)}>Charities</Link>
         </div>
       )}
     </nav>

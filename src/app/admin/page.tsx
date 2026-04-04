@@ -18,17 +18,20 @@ export default function AdminOverview() {
   ] : []
 
   return (
-    <div className="space-y-6">
-      <h1 className="text-2xl font-bold">Overview</h1>
+    <div className="space-y-8 max-w-6xl">
+      <h1 className="font-heading text-3xl text-charcoal border-b border-charcoal/10 pb-4">Overview</h1>
       {!stats ? (
-        <p className="text-black">Loading...</p>
+        <div className="flex items-center space-x-3">
+          <div className="w-5 h-5 border-2 border-olive/20 border-t-olive rounded-full animate-spin" />
+          <p className="text-charcoal/60 uppercase tracking-widest text-sm font-medium">Loading...</p>
+        </div>
       ) : (
-        <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-6">
           {cards.map(({ label, value, icon }) => (
-            <div key={label} className="bg-white rounded-2xl border p-6 space-y-2">
-              <span className="text-2xl">{icon}</span>
-              <p className="text-2xl font-bold">{value}</p>
-              <p className="text-sm text-black">{label}</p>
+            <div key={label} className="bg-white border border-charcoal/10 p-8 shadow-sm hover:shadow-md transition-shadow">
+              <span className="text-3xl mb-4 block">{icon}</span>
+              <p className="font-heading text-4xl text-charcoal mb-2">{value}</p>
+              <p className="text-xs text-charcoal/60 uppercase tracking-widest font-medium">{label}</p>
             </div>
           ))}
         </div>

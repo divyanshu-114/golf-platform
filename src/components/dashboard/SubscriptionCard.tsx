@@ -27,11 +27,11 @@ export default function SubscriptionCard({ subscription }: Props) {
   )
 
   return (
-    <div className="bg-white rounded-2xl border p-6 space-y-4">
+    <div className="bg-cream rounded-2xl border border-olive/20 p-6 space-y-4">
       <div className="flex justify-between items-start">
         <div>
-          <p className="text-xs text-black uppercase tracking-wide">Subscription</p>
-          <p className="text-xl font-bold capitalize mt-1">{subscription.plan} Plan</p>
+          <p className="text-xs text-charcoal/60 uppercase tracking-widest font-medium">Subscription</p>
+          <p className="text-xl font-bold text-charcoal capitalize mt-1">{subscription.plan} Plan</p>
         </div>
         <span className={`text-xs font-medium px-3 py-1 rounded-full capitalize ${statusStyles[subscription.status]}`}>
           {subscription.status}
@@ -39,7 +39,7 @@ export default function SubscriptionCard({ subscription }: Props) {
       </div>
 
       {subscription.renewal_date && (
-        <div className="flex items-center gap-2 text-sm text-black">
+        <div className="flex items-center gap-2 text-sm text-charcoal">
           <span>🗓</span>
           <span>
             {subscription.status === 'cancelled' ? 'Access until' : 'Renews on'}{' '}

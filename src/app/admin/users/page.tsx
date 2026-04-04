@@ -20,28 +20,30 @@ export default function AdminUsers() {
   }
 
   const statusColor: Record<string, string> = {
-    active: 'text-green-600', inactive: 'text-black',
-    cancelled: 'text-red-500', lapsed: 'text-yellow-600'
+    active: 'bg-olive/10 text-olive border-olive/20',
+    inactive: 'bg-charcoal/5 text-charcoal/60 border-charcoal/10',
+    cancelled: 'bg-red-100/50 text-red-700 border-red-200/50',
+    lapsed: 'bg-yellow-100/50 text-yellow-800 border-yellow-200/50'
   }
 
   return (
-    <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-bold">Users</h1>
+    <div className="space-y-8 max-w-6xl">
+      <div className="flex justify-between items-end border-b border-charcoal/10 pb-4">
+        <h1 className="font-heading text-3xl text-charcoal">Users</h1>
         <input
           placeholder="Search by name..."
           value={search}
           onChange={e => setSearch(e.target.value)}
-          className="border rounded-xl px-4 py-2 text-sm w-64 focus:outline-none focus:ring-2 focus:ring-black"
+          className="border border-charcoal/20 bg-white px-4 py-2 text-sm text-charcoal focus:outline-none focus:border-olive rounded-none w-64 uppercase tracking-wider placeholder:normal-case placeholder:tracking-normal"
         />
       </div>
 
-      <div className="bg-white rounded-2xl border overflow-hidden">
+      <div className="bg-white border border-charcoal/10 overflow-hidden shadow-sm">
         <table className="w-full text-sm">
-          <thead className="bg-gray-50 text-black uppercase text-xs">
+          <thead className="bg-charcoal/5 text-charcoal/60 uppercase tracking-widest text-[10px] font-medium border-b border-charcoal/10">
             <tr>
               {['Name', 'Plan', 'Status', 'Scores', 'Joined', 'Actions'].map(h => (
-                <th key={h} className="text-left px-4 py-3 font-medium">{h}</th>
+                <th key={h} className="text-left px-6 py-4">{h}</th>
               ))}
             </tr>
           </thead>
@@ -49,20 +51,24 @@ export default function AdminUsers() {
             {filtered.map(user => {
               const sub = user.subscriptions?.[0]
               return (
-                <tr key={user.id} className="border-t hover:bg-gray-50">
-                  <td className="px-4 py-3 font-medium">{user.full_name ?? '—'}</td>
-                  <td className="px-4 py-3 capitalize">{sub?.plan ?? '—'}</td>
-                  <td className={`px-4 py-3 capitalize font-medium ${statusColor[sub?.status] ?? 'text-black'}`}>
-                    {sub?.status ?? 'none'}
+                <tr key={user.id} className="border-b border-charcoal/5 hover:bg-cream/30 transition-colors last:border-0">
+                  <td className="px-6 py-4 font-medium text-charcoal">{user.full_name ?? '—'}</td>
+                  <td className="px-6 py-4 text-charcoal/70 capitalize uppercase tracking-widest text-xs font-bold">{sub?.plan ?? '—'}</td>
+                  <td className="px-6 py-4">
+                    <span className={`text-[10px] uppercase tracking-widest px-3 py-1 font-bold border ${statusColor[sub?.status] ?? 'bg-charcoal/5 text-charcoal/60 border-charcoal/10'}`}>
+                      {sub?.status ?? 'none'}
+                    </span>
                   </td>
-                  <td className="px-4 py-3">{user.scores?.length ?? 0}/5</td>
-                  <td className="px-4 py-3 text-black">
+                  <td className="px-6 py-4 text-charcoal">
+                    <span className="font-heading text-lg">{user.scores?.length ?? 0}</span><span className="text-charcoal/40 text-xs">/5</span>
+                  </td>
+                  <td className="px-6 py-4 text-charcoal/60">
                     {new Date(user.created_at).toLocaleDateString('en-GB')}
                   </td>
-                  <td className="px-4 py-3">
+                  <td className="px-6 py-4">
                     <button
                       onClick={() => handleDelete(user.id)}
-                      className="text-red-400 hover:text-red-600 text-xs"
+                      className="text-[10px] uppercase tracking-widest font-bold text-red-500 hover:text-red-700 transition-colors"
                     >
                       Delete
                     </button>
@@ -73,7 +79,9 @@ export default function AdminUsers() {
           </tbody>
         </table>
         {filtered.length === 0 && (
-          <p className="text-center text-black py-8">No users found.</p>
+          <div className="text-center py-12">
+            <p className="text-charcoal/60 text-sm uppercase tracking-widest font-medium">No users found.</p>
+          </div>
         )}
       </div>
     </div>

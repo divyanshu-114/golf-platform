@@ -1,6 +1,7 @@
 'use client'
 import { useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
+import Link from 'next/link'
 
 interface Props {
   charityName: string | null
@@ -36,44 +37,59 @@ export default function CharityCard({ charityName, contributionPct, userId }: Pr
   }
 
   return (
-    <div className="bg-white rounded-2xl border p-6 space-y-4">
-      <p className="text-xs text-black uppercase tracking-wide">Your Charity</p>
+    <div className="bg-cream rounded-none border border-charcoal/10">
+      <div className="p-6">
+        <label className="text-xs text-charcoal/60 uppercase tracking-widest font-medium mb-1 block">
+          You are supporting
+        </label>
+        <p className="font-heading text-2xl text-charcoal mb-6 border-b border-charcoal/5 pb-4">
+          {charityName || 'No charity selected'}
+        </p>
 
-      <div className="flex items-center gap-3">
-        <div className="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-lg">💚</div>
-        <div>
-          <p className="font-semibold">{charityName ?? 'No charity selected'}</p>
-          <a href="/dashboard/charity" className="text-xs text-blue-500 hover:underline">Change charity</a>
+        <div className="space-y-4 mb-6">
+          <div className="flex justify-between items-center">
+            <label className="text-xs text-charcoal/60 uppercase tracking-widest font-medium">
+              Contribution %
+            </label>
+            <span className="text-olive font-heading text-xl">{pct}%</span>
+          </div>
+          
+          <input
+            type="range"
+            min="10"
+            max="30"
+            step="5"
+            value={pct}
+            onChange={e => setPct(parseInt(e.target.value))}
+            className="w-full accent-olive h-1 bg-charcoal/10 rounded-none appearance-none cursor-pointer"
+          />
+          
+          <div className="flex justify-between text-xs text-charcoal/40 font-medium tracking-wider">
+            <span>10% (Min)</span>
+            <span>30% (Max)</span>
+          </div>
+        </div>
+
+        {saved && (
+          <p className="text-sm text-olive bg-olive/10 border border-olive/20 p-3 mb-4">Saved!</p>
+        )}
+
+        <div className="grid grid-cols-2 gap-3">
+          <button
+            onClick={handleUpdate}
+            disabled={saving || pct === contributionPct}
+            className="w-full bg-charcoal text-cream py-3 text-sm tracking-widest uppercase hover:bg-black disabled:opacity-50 transition-colors"
+          >
+            {saving ? 'Saving...' : 'Update %'}
+          </button>
+          <Link 
+            href="/dashboard/charity"
+            className="w-full border border-charcoal/20 text-charcoal text-center py-3 text-sm tracking-widest uppercase hover:bg-charcoal/5 transition-colors block"
+          >
+            Change All
+          </Link>
         </div>
       </div>
-
-      <div className="space-y-2">
-        <div className="flex justify-between text-sm">
-          <span className="text-black">Contribution</span>
-          <span className="font-semibold">{pct}%</span>
-        </div>
-        <input
-          type="range"
-          min={10}
-          max={50}
-          step={5}
-          value={pct}
-          onChange={e => setPct(Number(e.target.value))}
-          className="w-full accent-black"
-        />
-        <div className="flex justify-between text-xs text-black">
-          <span>Min 10%</span>
-          <span>Max 50%</span>
-        </div>
-      </div>
-
-      <button
-        onClick={handleUpdate}
-        disabled={saving || !userId}
-        className="w-full bg-black text-white py-2 rounded-xl text-sm hover:bg-gray-800 disabled:opacity-50"
-      >
-        {saved ? '✓ Saved!' : saving ? 'Saving...' : 'Update Contribution'}
-      </button>
     </div>
   )
 }

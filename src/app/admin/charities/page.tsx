@@ -47,24 +47,28 @@ export default function AdminCharities() {
   }
 
   return (
-    <div className="space-y-8">
-      <h1 className="text-2xl font-bold">Charity Management</h1>
+    <div className="space-y-12 max-w-6xl">
+      <div className="border-b border-charcoal/10 pb-4">
+        <h1 className="font-heading text-3xl text-charcoal">Charity Management</h1>
+      </div>
 
       {/* Form */}
-      <div className="bg-white border rounded-2xl p-6 space-y-4">
-        <h2 className="font-semibold">{editing ? 'Edit Charity' : 'Add New Charity'}</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="bg-cream/50 border border-olive/30 p-8 space-y-6">
+        <h2 className="font-heading text-xl text-charcoal border-b border-charcoal/5 pb-4">
+          {editing ? 'Edit Partner Charity' : 'Add New Partner'}
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <input
             placeholder="Charity name"
             value={form.name}
             onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
-            className="border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-black"
+            className="border border-charcoal/20 bg-white px-4 py-3 text-sm text-charcoal focus:outline-none focus:border-olive rounded-none"
           />
           <input
             placeholder="Image URL (optional)"
             value={form.image_url}
             onChange={e => setForm(f => ({ ...f, image_url: e.target.value }))}
-            className="border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-black"
+            className="border border-charcoal/20 bg-white px-4 py-3 text-sm text-charcoal focus:outline-none focus:border-olive rounded-none"
           />
         </div>
         <textarea
@@ -72,30 +76,30 @@ export default function AdminCharities() {
           value={form.description}
           onChange={e => setForm(f => ({ ...f, description: e.target.value }))}
           rows={3}
-          className="w-full border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-black resize-none"
+          className="w-full border border-charcoal/20 bg-white px-4 py-3 text-sm text-charcoal focus:outline-none focus:border-olive rounded-none resize-none"
         />
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-3 bg-white p-4 border border-charcoal/10">
           <input
             type="checkbox"
             id="featured"
             checked={form.is_featured}
             onChange={e => setForm(f => ({ ...f, is_featured: e.target.checked }))}
-            className="accent-black"
+            className="accent-olive w-4 h-4 cursor-pointer"
           />
-          <label htmlFor="featured" className="text-sm">Set as featured/spotlight charity</label>
+          <label htmlFor="featured" className="text-sm text-charcoal/80 cursor-pointer">Set as Featured/Spotlight Partner</label>
         </div>
-        <div className="flex gap-3">
+        <div className="flex gap-4 pt-2">
           <button
             onClick={handleSave}
             disabled={saving || !form.name}
-            className="bg-black text-white px-6 py-2 rounded-xl text-sm hover:bg-gray-800 disabled:opacity-50"
+            className="bg-charcoal text-cream px-8 py-3 text-xs uppercase tracking-widest font-medium hover:bg-black disabled:opacity-50 transition-colors border border-charcoal disabled:cursor-not-allowed"
           >
             {saving ? 'Saving...' : editing ? 'Update Charity' : 'Add Charity'}
           </button>
           {editing && (
             <button
               onClick={() => { setEditing(null); setForm(empty) }}
-              className="border px-6 py-2 rounded-xl text-sm hover:bg-gray-50"
+              className="bg-white border border-charcoal/20 px-8 py-3 text-xs uppercase tracking-widest font-medium text-charcoal hover:bg-charcoal/5 transition-colors"
             >
               Cancel
             </button>
@@ -104,36 +108,38 @@ export default function AdminCharities() {
       </div>
 
       {/* List */}
-      <div className="bg-white border rounded-2xl overflow-hidden">
+      <div className="bg-white border border-charcoal/10 overflow-hidden shadow-sm">
         <table className="w-full text-sm">
-          <thead className="bg-gray-50 text-black uppercase text-xs">
+          <thead className="bg-charcoal/5 text-charcoal/60 uppercase tracking-widest text-[10px] font-medium border-b border-charcoal/10">
             <tr>
               {['Name', 'Featured', 'Description', 'Actions'].map(h => (
-                <th key={h} className="text-left px-4 py-3 font-medium">{h}</th>
+                <th key={h} className="text-left px-6 py-4">{h}</th>
               ))}
             </tr>
           </thead>
           <tbody>
             {charities.map(c => (
-              <tr key={c.id} className="border-t hover:bg-gray-50">
-                <td className="px-4 py-3 font-medium">{c.name}</td>
-                <td className="px-4 py-3">
+              <tr key={c.id} className="border-b border-charcoal/5 hover:bg-cream/30 transition-colors last:border-0">
+                <td className="px-6 py-4 font-heading text-lg text-charcoal">{c.name}</td>
+                <td className="px-6 py-4">
                   {c.is_featured
-                    ? <span className="text-xs bg-yellow-100 text-yellow-700 px-2 py-1 rounded-full">⭐ Featured</span>
-                    : <span className="text-xs text-black">—</span>
+                    ? <span className="text-[10px] uppercase tracking-widest px-3 py-1 font-bold border bg-olive/10 text-olive border-olive/20">Featured</span>
+                    : <span className="text-charcoal/40">—</span>
                   }
                 </td>
-                <td className="px-4 py-3 text-black max-w-xs truncate">{c.description}</td>
-                <td className="px-4 py-3 flex gap-3">
-                  <button onClick={() => handleEdit(c)} className="text-xs text-blue-500 hover:underline">Edit</button>
-                  <button onClick={() => handleDelete(c.id)} className="text-xs text-red-400 hover:text-red-600">Delete</button>
+                <td className="px-6 py-4 text-charcoal/70 max-w-xs truncate">{c.description}</td>
+                <td className="px-6 py-4 flex gap-4 mt-1">
+                  <button onClick={() => handleEdit(c)} className="text-[10px] uppercase tracking-widest font-bold text-charcoal hover:text-olive transition-colors">Edit</button>
+                  <button onClick={() => handleDelete(c.id)} className="text-[10px] uppercase tracking-widest font-bold text-red-500 hover:text-red-700 transition-colors">Delete</button>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
         {charities.length === 0 && (
-          <p className="text-center text-black py-8">No charities yet.</p>
+          <div className="text-center py-12">
+            <p className="text-charcoal/60 text-sm uppercase tracking-widest font-medium">No charities yet.</p>
+          </div>
         )}
       </div>
     </div>

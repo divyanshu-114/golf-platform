@@ -5,18 +5,15 @@ import CharityCard from '@/components/dashboard/CharityCard'
 import WinningsCard from '@/components/dashboard/WinningsCard'
 import ScoreEntry from '@/components/ScoreEntry'
 import Navbar from '@/components/Navbar'
-import dynamic from 'next/dynamic'
-
-const GolfBallScene = dynamic(() => import('@/components/three/GolfBallScene'), { ssr: false })
 
 export default function DashboardPage() {
   const { data, loading } = useDashboard()
 
   if (loading) return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-gray-50 to-green-50">
-      <div className="text-center space-y-3">
-        <div className="animate-spin w-10 h-10 border-3 border-green-500 border-t-transparent rounded-full mx-auto" />
-        <p className="text-sm text-black">Loading your dashboard...</p>
+    <div className="flex items-center justify-center min-h-screen bg-cream">
+      <div className="text-center space-y-4">
+        <div className="w-12 h-12 border-2 border-olive/20 border-t-olive rounded-full animate-spin mx-auto" />
+        <p className="text-sm text-charcoal/60 uppercase tracking-widest font-medium">Loading Dashboard</p>
       </div>
     </div>
   )
@@ -27,34 +24,30 @@ export default function DashboardPage() {
   const winCount = data?.winners?.length ?? 0
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-green-50/30">
+    <div className="min-h-screen bg-[#F9F8F3]">
       <Navbar />
 
-      {/* Hero Section with 3D */}
-      <div className="relative overflow-hidden">
-        <div className="absolute inset-0 h-72">
-          <GolfBallScene variant="light" />
-          <div className="absolute inset-0 bg-gradient-to-b from-white/70 via-white/80 to-white" style={{ zIndex: 1 }} />
-        </div>
-
-        <div className="relative z-10 max-w-6xl mx-auto px-6 pt-24 pb-8">
-          <div className="flex items-end justify-between">
-            <div>
-              <p className="text-sm font-medium text-green-600 mb-1">Dashboard</p>
-              <h1 className="text-4xl font-bold tracking-tight">
-                Welcome back, {firstName} 👋
-              </h1>
-              <p className="text-black mt-2 text-sm">Here&apos;s your GolfGives overview</p>
-            </div>
-            <div className="hidden md:flex items-center gap-3">
-              <div className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium ${
-                isActive
-                  ? 'bg-green-50 text-green-700 border border-green-200'
-                  : 'bg-gray-100 text-black border border-gray-200'
-              }`}>
-                <span className={`w-2 h-2 rounded-full ${isActive ? 'bg-green-500 animate-pulse' : 'bg-gray-400'}`} />
-                {isActive ? 'Active Member' : 'No Subscription'}
-              </div>
+      {/* Hero Section */}
+      <div className="bg-charcoal pt-32 pb-16 px-6 relative overflow-hidden">
+        {/* Decorative elements */}
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-olive/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+        
+        <div className="relative z-10 max-w-6xl mx-auto flex flex-col md:flex-row md:items-end justify-between gap-6">
+          <div>
+            <p className="text-olive uppercase tracking-[0.3em] text-xs font-medium mb-3">Dashboard</p>
+            <h1 className="font-heading text-4xl md:text-5xl text-white">
+              Welcome back, {firstName}
+            </h1>
+            <p className="text-cream/70 mt-3 font-light">Here&apos;s your Almaris overview</p>
+          </div>
+          <div className="flex items-center gap-3">
+            <div className={`flex items-center gap-2 px-4 py-2 text-xs font-medium uppercase tracking-wider border ${
+              isActive
+                ? 'bg-olive/10 text-olive border-olive/30'
+                : 'bg-white/5 text-white/50 border-white/10'
+            }`}>
+              <span className={`w-1.5 h-1.5 rounded-full ${isActive ? 'bg-olive shadow-[0_0_8px_rgba(141,160,103,0.8)]' : 'bg-white/30'}`} />
+              {isActive ? 'Active Member' : 'No Subscription'}
             </div>
           </div>
         </div>
@@ -63,23 +56,19 @@ export default function DashboardPage() {
       <div className="max-w-6xl mx-auto px-6 pb-12 space-y-6">
 
         {/* Quick Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 -mt-2">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 -mt-8 relative z-20">
           {[
-            { label: 'Scores Entered', value: scoreCount, icon: '⛳', color: 'from-green-500 to-emerald-600' },
-            { label: 'Draws Won', value: winCount, icon: '🏆', color: 'from-amber-500 to-orange-600' },
-            { label: 'Contribution', value: `${data?.charity?.charity_contribution_pct ?? 10}%`, icon: '💚', color: 'from-pink-500 to-rose-600' },
-            { label: 'Next Draw', value: new Date().toLocaleDateString('en-GB', { month: 'short' }), icon: '📅', color: 'from-blue-500 to-indigo-600' },
+            { label: 'Scores Entered', value: scoreCount, icon: '🏌️' },
+            { label: 'Draws Won', value: winCount, icon: '🏆' },
+            { label: 'Contribution', value: `${data?.charity?.charity_contribution_pct ?? 10}%`, icon: '💚' },
+            { label: 'Next Draw', value: new Date().toLocaleDateString('en-GB', { month: 'short' }), icon: '📅' },
           ].map((stat) => (
-            <div key={stat.label} className="bg-white rounded-2xl border border-gray-100 p-5 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200">
-              <div className="flex items-center gap-3">
-                <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${stat.color} flex items-center justify-center text-lg shadow-sm`}>
-                  {stat.icon}
-                </div>
-                <div>
-                  <p className="text-2xl font-bold">{stat.value}</p>
-                  <p className="text-xs text-black">{stat.label}</p>
-                </div>
+            <div key={stat.label} className="bg-white border text-center border-charcoal/10 p-6 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] hover:-translate-y-1 transition-transform duration-300">
+              <div className="w-10 h-10 bg-cream text-olive flex items-center justify-center text-lg mx-auto mb-3">
+                {stat.icon}
               </div>
+              <p className="font-heading text-2xl text-charcoal mb-1">{stat.value}</p>
+              <p className="text-xs text-charcoal/60 uppercase tracking-wider">{stat.label}</p>
             </div>
           ))}
         </div>
@@ -91,23 +80,24 @@ export default function DashboardPage() {
           <div className="lg:col-span-2 space-y-6">
 
             {/* Score Entry */}
-            <div className="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
-              <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
-                <span className="w-8 h-8 rounded-lg bg-green-50 flex items-center justify-center text-sm">🏌️</span>
+            <div className="bg-white border border-charcoal/10 p-8 shadow-sm">
+              <h2 className="font-heading text-xl text-charcoal mb-6 flex items-center gap-3">
+                <span className="w-8 h-8 bg-cream text-olive flex items-center justify-center text-sm">🏌️</span>
                 Enter Score
               </h2>
               <ScoreEntry />
             </div>
 
             {/* Subscription */}
-            <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
-              <div className="px-6 pt-5 pb-1">
-                <h2 className="text-sm font-semibold text-black uppercase tracking-wider flex items-center gap-2">
-                  <span className="w-6 h-6 rounded-md bg-blue-50 flex items-center justify-center text-xs">💳</span>
-                  Subscription
+            <div className="bg-white border border-charcoal/10 shadow-sm">
+              <div className="px-8 pt-6 pb-2 border-b border-charcoal/5">
+                <h2 className="text-xs text-olive uppercase tracking-[0.2em] font-medium flex items-center gap-2">
+                  <span className="text-sm">💳</span> Subscription
                 </h2>
               </div>
-              <SubscriptionCard subscription={data?.subscription ?? null} />
+              <div className="p-2">
+                <SubscriptionCard subscription={data?.subscription ?? null} />
+              </div>
             </div>
 
           </div>
@@ -116,50 +106,56 @@ export default function DashboardPage() {
           <div className="space-y-6">
 
             {/* Charity */}
-            <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
-              <div className="px-6 pt-5 pb-1">
-                <h2 className="text-sm font-semibold text-black uppercase tracking-wider flex items-center gap-2">
-                  <span className="w-6 h-6 rounded-md bg-green-50 flex items-center justify-center text-xs">💚</span>
-                  Your Charity
+            <div className="bg-white border border-charcoal/10 shadow-sm">
+              <div className="px-6 pt-6 pb-2 border-b border-charcoal/5">
+                <h2 className="text-xs text-olive uppercase tracking-[0.2em] font-medium flex items-center gap-2">
+                  <span className="text-sm">💚</span> Your Charity
                 </h2>
               </div>
-              <CharityCard
-                charityName={data?.charity?.charities?.name ?? null}
-                contributionPct={data?.charity?.charity_contribution_pct ?? 10}
-                userId={data?.profile?.id ?? ''}
-              />
+              <div className="p-2">
+                <CharityCard
+                  charityName={data?.charity?.charities?.name ?? null}
+                  contributionPct={data?.charity?.charity_contribution_pct ?? 10}
+                  userId={data?.profile?.id ?? ''}
+                />
+              </div>
             </div>
 
             {/* Winnings */}
-            <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
-              <div className="px-6 pt-5 pb-1">
-                <h2 className="text-sm font-semibold text-black uppercase tracking-wider flex items-center gap-2">
-                  <span className="w-6 h-6 rounded-md bg-amber-50 flex items-center justify-center text-xs">🏆</span>
-                  Winnings
+            <div className="bg-white border border-charcoal/10 shadow-sm">
+              <div className="px-6 pt-6 pb-2 border-b border-charcoal/5">
+                <h2 className="text-xs text-olive uppercase tracking-[0.2em] font-medium flex items-center gap-2">
+                  <span className="text-sm">🏆</span> Winnings
                 </h2>
               </div>
-              <WinningsCard winners={data?.winners ?? []} />
+              <div className="p-2">
+                <WinningsCard winners={data?.winners ?? []} />
+              </div>
             </div>
 
             {/* Draw Eligibility */}
-            <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl p-6 text-white shadow-lg">
-              <p className="text-xs text-black uppercase tracking-wider mb-3">Monthly Draw</p>
-              <div className="flex items-center gap-3 mb-4">
-                <div className={`w-12 h-12 rounded-xl flex items-center justify-center text-2xl ${
-                  isActive ? 'bg-green-500/20' : 'bg-red-500/20'
+            <div className="bg-charcoal p-8 text-cream shadow-lg relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-olive/10 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2" />
+              
+              <p className="text-xs text-olive uppercase tracking-[0.2em] font-medium mb-4">Monthly Draw</p>
+              
+              <div className="flex items-center gap-4 mb-6">
+                <div className={`w-12 h-12 flex flex-shrink-0 items-center justify-center text-xl border ${
+                  isActive ? 'bg-olive/10 border-olive/30 text-olive' : 'bg-red-900/20 border-red-500/30 text-red-400'
                 }`}>
-                  {isActive ? '✓' : '✗'}
+                  {isActive ? '✓' : '✕'}
                 </div>
                 <div>
-                  <p className="font-semibold">{isActive ? 'You\'re eligible!' : 'Not eligible'}</p>
-                  <p className="text-xs text-black">
+                  <p className="font-heading text-lg">{isActive ? 'You\'re eligible!' : 'Not eligible'}</p>
+                  <p className="text-sm text-cream/60">
                     {isActive ? 'Your scores are in the next draw' : 'Subscribe to enter draws'}
                   </p>
                 </div>
               </div>
-              <div className="bg-white/10 rounded-xl p-3 text-center">
-                <p className="text-xs text-black">Next draw</p>
-                <p className="font-bold text-lg">
+              
+              <div className="bg-white/5 border border-white/10 p-4 text-center">
+                <p className="text-xs text-cream/60 uppercase tracking-widest mb-1">Next Draw</p>
+                <p className="font-heading text-xl">
                   End of {new Date().toLocaleDateString('en-GB', { month: 'long', year: 'numeric' })}
                 </p>
               </div>

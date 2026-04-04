@@ -45,71 +45,71 @@ export default function AdminDraws() {
   }
 
   return (
-    <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-bold">Draw Management</h1>
-        <div className="flex gap-3 items-center">
+    <div className="space-y-8 max-w-6xl">
+      <div className="flex justify-between items-end border-b border-charcoal/10 pb-4">
+        <h1 className="font-heading text-3xl text-charcoal">Draw Management</h1>
+        <div className="flex gap-4 items-center">
           <select
             value={mode}
             onChange={e => setMode(e.target.value as 'random' | 'algorithmic')}
-            className="border rounded-xl px-3 py-2 text-sm focus:outline-none"
+            className="border border-charcoal/20 bg-white px-4 py-2 text-sm text-charcoal focus:outline-none focus:border-olive rounded-none uppercase tracking-widest font-medium"
           >
-            <option value="random">🎲 Random</option>
-            <option value="algorithmic">🧠 Algorithmic</option>
+            <option value="random">Random Mode</option>
+            <option value="algorithmic">Algorithmic Mode</option>
           </select>
           <button
             onClick={createDraw}
             disabled={loading}
-            className="bg-black text-white px-4 py-2 rounded-xl text-sm hover:bg-gray-800 disabled:opacity-50"
+            className="bg-charcoal text-cream px-6 py-2 text-xs uppercase tracking-widest font-medium hover:bg-black disabled:opacity-50 transition-colors border border-charcoal"
           >
-            + New Draw
+            New Draw
           </button>
         </div>
       </div>
 
       {/* Simulation Result */}
       {simulation && (
-        <div className="bg-amber-50 border border-amber-200 rounded-2xl p-6 space-y-4">
-          <div className="flex justify-between items-center">
-            <p className="font-semibold text-amber-800">🔍 Simulation Preview</p>
-            <span className="text-xs bg-amber-200 text-amber-800 px-2 py-1 rounded-full">Not Published</span>
+        <div className="bg-cream/50 border border-olive/30 p-8 space-y-6">
+          <div className="flex justify-between items-center border-b border-charcoal/5 pb-4">
+            <p className="font-heading text-xl text-charcoal">Simulation Preview</p>
+            <span className="text-[10px] bg-charcoal/5 text-charcoal/60 px-3 py-1 uppercase tracking-widest font-bold border border-charcoal/10">Not Published</span>
           </div>
           <div>
-            <p className="text-xs text-amber-600 mb-2">Winning Numbers</p>
-            <div className="flex gap-2">
+            <p className="text-xs text-charcoal/60 uppercase tracking-widest font-medium mb-3">Winning Numbers</p>
+            <div className="flex gap-3">
               {simulation.winningNumbers.map((n: number) => (
-                <div key={n} className="w-9 h-9 rounded-full bg-black text-white flex items-center justify-center text-sm font-bold">
+                <div key={n} className="w-12 h-12 bg-olive text-cream flex items-center justify-center font-heading text-xl border border-olive">
                   {n}
                 </div>
               ))}
             </div>
           </div>
-          <div className="grid grid-cols-3 gap-3 text-sm">
-            <div className="bg-white rounded-xl p-3">
-              <p className="text-xs text-black">5-Match Winners</p>
-              <p className="font-bold text-lg">{simulation.winners[5]?.length ?? 0}</p>
-              <p className="text-xs text-black">Pool: £{simulation.pools.tier5}</p>
+          <div className="grid grid-cols-3 gap-6 text-sm">
+            <div className="bg-white border border-charcoal/10 p-5 shadow-sm">
+              <p className="text-xs text-charcoal/60 uppercase tracking-widest font-medium mb-1">5-Match Winners</p>
+              <p className="font-heading text-2xl text-charcoal">{simulation.winners[5]?.length ?? 0}</p>
+              <p className="text-xs text-charcoal/50 mt-2 font-medium">Pool: £{simulation.pools.tier5}</p>
             </div>
-            <div className="bg-white rounded-xl p-3">
-              <p className="text-xs text-black">4-Match Winners</p>
-              <p className="font-bold text-lg">{simulation.winners[4]?.length ?? 0}</p>
-              <p className="text-xs text-black">Pool: £{simulation.pools.tier4}</p>
+            <div className="bg-white border border-charcoal/10 p-5 shadow-sm">
+              <p className="text-xs text-charcoal/60 uppercase tracking-widest font-medium mb-1">4-Match Winners</p>
+              <p className="font-heading text-2xl text-charcoal">{simulation.winners[4]?.length ?? 0}</p>
+              <p className="text-xs text-charcoal/50 mt-2 font-medium">Pool: £{simulation.pools.tier4}</p>
             </div>
-            <div className="bg-white rounded-xl p-3">
-              <p className="text-xs text-black">3-Match Winners</p>
-              <p className="font-bold text-lg">{simulation.winners[3]?.length ?? 0}</p>
-              <p className="text-xs text-black">Pool: £{simulation.pools.tier3}</p>
+            <div className="bg-white border border-charcoal/10 p-5 shadow-sm">
+              <p className="text-xs text-charcoal/60 uppercase tracking-widest font-medium mb-1">3-Match Winners</p>
+              <p className="font-heading text-2xl text-charcoal">{simulation.winners[3]?.length ?? 0}</p>
+              <p className="text-xs text-charcoal/50 mt-2 font-medium">Pool: £{simulation.pools.tier3}</p>
             </div>
           </div>
           {simulation.winners[5]?.length === 0 && (
-            <p className="text-xs text-amber-700 font-medium">
-              ⚠️ No jackpot winner — £{simulation.pools.tier5} will roll over
+            <p className="text-xs text-olive font-medium tracking-widest uppercase bg-olive/10 border border-olive/20 p-4">
+              Alert: No jackpot winner — £{simulation.pools.tier5} will roll over
             </p>
           )}
           <button
             onClick={() => publish(simulation.draw_id)}
             disabled={loading}
-            className="bg-black text-white px-6 py-2 rounded-xl text-sm hover:bg-gray-800 disabled:opacity-50"
+            className="bg-olive text-cream px-8 py-3 text-xs uppercase tracking-widest font-medium hover:bg-[#7a8c54] disabled:opacity-50 transition-colors border border-olive"
           >
             Publish Official Draw
           </button>
@@ -117,47 +117,47 @@ export default function AdminDraws() {
       )}
 
       {/* Draws Table */}
-      <div className="bg-white rounded-2xl border overflow-hidden">
+      <div className="bg-white border border-charcoal/10 overflow-hidden shadow-sm">
         <table className="w-full text-sm">
-          <thead className="bg-gray-50 text-black uppercase text-xs">
+          <thead className="bg-charcoal/5 text-charcoal/60 uppercase tracking-widest text-[10px] font-medium border-b border-charcoal/10">
             <tr>
               {['Month', 'Status', 'Winning Numbers', 'Jackpot Rollover', 'Actions'].map(h => (
-                <th key={h} className="text-left px-4 py-3 font-medium">{h}</th>
+                <th key={h} className="text-left px-6 py-4">{h}</th>
               ))}
             </tr>
           </thead>
           <tbody>
             {draws.map(draw => (
-              <tr key={draw.id} className="border-t hover:bg-gray-50">
-                <td className="px-4 py-3 font-medium">
+              <tr key={draw.id} className="border-b border-charcoal/5 hover:bg-cream/30 transition-colors last:border-0">
+                <td className="px-6 py-4 font-medium text-charcoal">
                   {new Date(draw.month).toLocaleDateString('en-GB', { month: 'long', year: 'numeric' })}
                 </td>
-                <td className="px-4 py-3">
-                  <span className={`text-xs px-2 py-1 rounded-full font-medium ${
-                    draw.status === 'published' ? 'bg-green-100 text-green-700' :
-                    draw.status === 'simulated' ? 'bg-amber-100 text-amber-700' :
-                    'bg-gray-100 text-black'
+                <td className="px-6 py-4">
+                  <span className={`text-[10px] uppercase tracking-widest px-3 py-1 font-bold border ${
+                    draw.status === 'published' ? 'bg-olive/10 text-olive border-olive/20' :
+                    draw.status === 'simulated' ? 'bg-yellow-100/50 text-yellow-800 border-yellow-200/50' :
+                    'bg-charcoal/5 text-charcoal/60 border-charcoal/10'
                   }`}>{draw.status}</span>
                 </td>
-                <td className="px-4 py-3">
+                <td className="px-6 py-4">
                   {draw.winning_numbers
-                    ? <div className="flex gap-1">{draw.winning_numbers.map((n: number) => (
-                        <span key={n} className="w-7 h-7 rounded-full bg-black text-white text-xs flex items-center justify-center font-bold">{n}</span>
+                    ? <div className="flex gap-2">{draw.winning_numbers.map((n: number) => (
+                        <span key={n} className="w-8 h-8 bg-charcoal text-cream text-[10px] flex items-center justify-center font-bold">{n}</span>
                       ))}</div>
-                    : <span className="text-black">—</span>
+                    : <span className="text-charcoal/40">—</span>
                   }
                 </td>
-                <td className="px-4 py-3">
+                <td className="px-6 py-4">
                   {draw.jackpot_rollover > 0
-                    ? <span className="text-amber-600 font-medium">£{draw.jackpot_rollover}</span>
-                    : '—'
+                    ? <span className="text-olive font-heading text-lg">£{draw.jackpot_rollover.toFixed(2)}</span>
+                    : <span className="text-charcoal/40">—</span>
                   }
                 </td>
-                <td className="px-4 py-3">
+                <td className="px-6 py-4">
                   {draw.status === 'pending' && (
                     <button
                       onClick={() => simulate(draw.id)}
-                      className="text-xs bg-gray-100 px-3 py-1 rounded-lg hover:bg-gray-200"
+                      className="text-[10px] uppercase tracking-widest font-bold bg-white border border-charcoal/20 px-4 py-2 hover:bg-charcoal/5 transition-colors text-charcoal"
                     >
                       Simulate
                     </button>
@@ -168,7 +168,9 @@ export default function AdminDraws() {
           </tbody>
         </table>
         {draws.length === 0 && (
-          <p className="text-center text-black py-8">No draws yet.</p>
+          <div className="text-center py-12">
+            <p className="text-charcoal/60 text-sm uppercase tracking-widest font-medium">No draws yet.</p>
+          </div>
         )}
       </div>
     </div>

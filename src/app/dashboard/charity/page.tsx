@@ -1,6 +1,7 @@
 'use client'
 import { useEffect, useState } from 'react'
 import Navbar from '@/components/Navbar'
+import BackButton from '@/components/BackButton'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/client'
 
@@ -50,72 +51,84 @@ export default function CharitySelectPage() {
   }
 
   return (
-    <>
+    <div className="min-h-screen bg-[#F9F8F3]">
       <Navbar />
-      <div className="max-w-4xl mx-auto px-6 pt-24 pb-12 space-y-8">
-        <div>
-          <Link href="/dashboard" className="text-sm text-black hover:text-black transition">← Back to Dashboard</Link>
-          <h1 className="text-3xl font-bold mt-2">Choose Your Charity</h1>
-          <p className="text-black mt-1">Select a charity to support with a portion of your subscription.</p>
+
+      <div className="max-w-4xl mx-auto px-6 py-32 space-y-10">
+        <BackButton label="Back to Dashboard" />
+
+        <div className="space-y-4 border-b border-charcoal/10 pb-6">
+          <h1 className="font-heading text-4xl text-charcoal">Designated Charity</h1>
+          <p className="text-charcoal/70 text-lg leading-relaxed">
+            A percentage of your subscription goes to a charity of your choice. Select one below to direct your contribution.
+          </p>
         </div>
 
         {/* Contribution slider */}
-        <div className="bg-white rounded-2xl border p-6 space-y-3">
-          <div className="flex justify-between text-sm">
-            <span className="text-black">Your contribution percentage</span>
-            <span className="font-bold text-lg">{pct}%</span>
+        <div className="bg-white border border-charcoal/10 p-8 shadow-sm space-y-6">
+          <h2 className="font-heading text-2xl text-charcoal border-b border-charcoal/5 pb-4">Contribution Level</h2>
+          
+          <div className="flex items-center justify-between text-sm">
+            <span className="text-charcoal/60 uppercase tracking-widest font-medium">Dedicate</span>
+            <span className="text-olive font-heading text-xl">{pct}%</span>
           </div>
+          
           <input
             type="range"
-            min={10}
-            max={50}
-            step={5}
+            min="10"
+            max="30"
+            step="5"
             value={pct}
-            onChange={e => setPct(Number(e.target.value))}
-            className="w-full accent-green-600"
+            onChange={e => setPct(parseInt(e.target.value))}
+            className="w-full accent-olive h-1 bg-charcoal/10 rounded-none appearance-none cursor-pointer"
           />
-          <div className="flex justify-between text-xs text-black">
-            <span>Min 10%</span>
-            <span>Max 50%</span>
+          <div className="flex justify-between text-xs text-charcoal/40 uppercase tracking-widest font-medium">
+            <span>Minimum (10%)</span>
+            <span>Maximum (30%)</span>
           </div>
         </div>
 
-        {success && (
-          <div className="bg-green-50 border border-green-200 text-green-700 rounded-xl px-4 py-3 text-sm">
-            ✓ {success}
-          </div>
-        )}
+        {/* Charity List */}
+        <div className="space-y-4">
+          <h2 className="font-heading text-2xl text-charcoal mb-6 border-b border-charcoal/5 pb-4">Available Partners</h2>
+          {loading ? (
+            <p className="text-charcoal/60 text-sm">Loading charities...</p>
+          ) : charities.length === 0 ? (
+            <p className="text-charcoal/60 text-sm">No charities found.</p>
+          ) : (
+            <div className="grid gap-4">
+              {charities.map(charity => (
+                <div 
+                  key={charity.id}
+                  className="flex flex-col md:flex-row md:items-center justify-between p-6 border border-charcoal/10 bg-white transition-all duration-300 hover:border-olive/50"
+                >
+                  <div className="flex-1 pr-4 mb-4 md:mb-0">
+                    <h3 className="font-heading text-xl text-charcoal mb-2">{charity.name}</h3>
+                    <p className="text-sm text-charcoal/70 line-clamp-2 leading-relaxed">{charity.description}</p>
+                  </div>
 
-        {loading ? (
-          <div className="flex justify-center py-20">
-            <div className="animate-spin w-8 h-8 border-2 border-black border-t-transparent rounded-full" />
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {charities.map(c => (
-              <div key={c.id} className="bg-white rounded-2xl border p-6 space-y-3 hover:shadow-md transition">
-                <div className="flex items-start gap-3">
-                  <div className="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center text-2xl">💚</div>
-                  <div className="flex-1">
-                    <h3 className="font-semibold">{c.name}</h3>
-                    <p className="text-sm text-black mt-1 line-clamp-2">{c.description}</p>
+                  <div className="flex-shrink-0">
+                    <button
+                      onClick={() => handleSelect(charity.id)}
+                      disabled={saving !== null}
+                      className="w-full md:w-auto border border-charcoal/20 text-charcoal px-8 py-3 text-sm tracking-widest uppercase hover:bg-olive hover:text-cream hover:border-olive transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      {saving === charity.id ? 'Saving...' : 'Select'}
+                    </button>
                   </div>
                 </div>
-                {c.is_featured && (
-                  <span className="inline-block text-xs bg-yellow-100 text-yellow-700 px-2 py-1 rounded-full">⭐ Featured</span>
-                )}
-                <button
-                  onClick={() => handleSelect(c.id)}
-                  disabled={saving === c.id}
-                  className="w-full bg-gradient-to-r from-green-500 to-emerald-600 text-white py-2.5 rounded-xl text-sm font-medium hover:from-green-600 hover:to-emerald-700 disabled:opacity-50 transition-all"
-                >
-                  {saving === c.id ? 'Selecting...' : `Select & Donate ${pct}%`}
-                </button>
-              </div>
-            ))}
+              ))}
+            </div>
+          )}
+        </div>
+
+        {success && (
+          <div className="fixed bottom-6 right-6 bg-olive text-cream px-6 py-4 shadow-2xl flex items-center gap-3 animate-in slide-in-from-bottom-5 z-50">
+            <span className="text-xl">✓</span>
+            <p className="font-medium text-sm tracking-widest uppercase">{success}</p>
           </div>
         )}
       </div>
-    </>
+    </div>
   )
 }

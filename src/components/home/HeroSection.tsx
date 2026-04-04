@@ -1,95 +1,104 @@
 'use client'
 import { motion } from 'framer-motion'
-import Link from 'next/link'
+import Image from 'next/image'
 
 export default function HeroSection() {
   return (
-    <section className="min-h-screen bg-black text-white flex flex-col items-center justify-center text-center px-6 relative overflow-hidden">
-
-      {/* Background subtle grid */}
-      <div className="absolute inset-0 opacity-5"
-        style={{ backgroundImage: 'radial-gradient(circle, white 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
-
-      {/* Floating blobs */}
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-green-500/10 rounded-full blur-3xl animate-pulse" />
-      <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl animate-pulse delay-1000" />
-
-      <div className="relative z-10 max-w-4xl space-y-8">
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-        >
-          <span className="inline-block bg-white/10 border border-white/20 text-xs px-4 py-2 rounded-full mb-6 backdrop-blur-sm">
-            🏌️ Play Golf · Win Prizes · Change Lives
-          </span>
-        </motion.div>
-
-        <motion.h1
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.1 }}
-          className="text-5xl md:text-7xl font-bold leading-tight tracking-tight"
-        >
-          Your golf score<br />
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-emerald-300">
-            funds the future
-          </span>
-        </motion.h1>
-
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="text-lg md:text-xl text-black max-w-2xl mx-auto leading-relaxed"
-        >
-          Subscribe. Enter your Stableford scores. Win monthly prizes.
-          And support a charity that matters to you — automatically.
-        </motion.p>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="flex flex-col sm:flex-row gap-4 justify-center"
-        >
-          <Link href="/pricing"
-            className="bg-white text-black px-8 py-4 rounded-full font-semibold text-sm hover:bg-gray-100 transition hover:scale-105 active:scale-95">
-            Start for £9.99/month →
-          </Link>
-          <Link href="/#how-it-works"
-            className="border border-white/30 text-white px-8 py-4 rounded-full text-sm hover:bg-white/10 transition">
-            See how it works
-          </Link>
-        </motion.div>
-
-        {/* Trust bar */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.6 }}
-          className="flex flex-wrap justify-center gap-6 text-xs text-black pt-4"
-        >
-          {['✓ Cancel anytime', '✓ 10% min to charity', '✓ Monthly prize draws', '✓ No golf clichés'].map(t => (
-            <span key={t}>{t}</span>
-          ))}
-        </motion.div>
+    <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      {/* Background image */}
+      <div className="absolute inset-0">
+        <Image
+          src="/images/hero-golfer.png"
+          alt="Golfer on a scenic course at sunset"
+          fill
+          sizes="100vw"
+          className="object-cover"
+          priority
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-charcoal/70 via-charcoal/40 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-charcoal/50 via-transparent to-charcoal/20" />
       </div>
 
-      {/* Scroll indicator */}
+      {/* Content */}
+      <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-10 w-full pt-20">
+        <div className="max-w-2xl">
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7 }}
+            className="text-olive uppercase tracking-[0.3em] pl-1 text-xs font-medium mb-6"
+          >
+            Play. Win. Give Back.
+          </motion.p>
+
+          <motion.h1
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.15 }}
+            className="font-heading text-6xl md:text-8xl text-white tracking-wide mb-6"
+          >
+            Your Game,<br />
+            <span className="italic text-cream/90">Rewarded.</span>
+          </motion.h1>
+
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="text-cream/80 max-w-lg text-lg leading-relaxed font-light mb-10"
+          >
+            Log your golf scores, enter monthly prize draws, and seamlessly support your chosen charities — all in one elegant platform.
+          </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.45 }}
+            className="flex gap-4"
+          >
+            <a
+              href="/pricing"
+              className="bg-olive hover:bg-olive-dark text-white px-8 py-3.5 text-xs uppercase tracking-widest transition-all duration-300 hover:shadow-lg hover:shadow-olive/20"
+            >
+              Get Started
+            </a>
+            <a
+              href="#welcome"
+              className="border border-white/30 text-white px-8 py-3.5 text-xs uppercase tracking-widest hover:bg-white/10 transition-all duration-300"
+            >
+              Explore
+            </a>
+          </motion.div>
+        </div>
+      </div>
+
+      {/* Bottom icon strip */}
       <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-black"
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.7, delay: 0.7 }}
+        className="absolute bottom-0 left-0 right-0 z-10"
       >
-        <span className="text-xs">Scroll</span>
-        <motion.div
-          animate={{ y: [0, 8, 0] }}
-          transition={{ repeat: Infinity, duration: 1.5 }}
-          className="w-4 h-4 border-b-2 border-r-2 border-gray-600 rotate-45"
-        />
+        <div className="max-w-5xl mx-auto px-6">
+          <div className="grid grid-cols-4 border-t border-white/15">
+            {[
+              { icon: '🏌️', label: 'Score Tracking' },
+              { icon: '🏆', label: 'Monthly Draws' },
+              { icon: '💚', label: 'Charity Giving' },
+              { icon: '📊', label: 'Leaderboards' },
+            ].map((item, i) => (
+              <div
+                key={item.label}
+                className={`flex items-center justify-center gap-3 py-6 text-white/70 ${
+                  i < 3 ? 'border-r border-white/15' : ''
+                }`}
+              >
+                <span className="text-2xl">{item.icon}</span>
+                <span className="text-xs uppercase tracking-widest font-medium">{item.label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
       </motion.div>
     </section>
   )
