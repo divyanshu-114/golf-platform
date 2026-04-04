@@ -1,7 +1,7 @@
 'use client'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, Suspense } from 'react'
 import { createClient } from '@/lib/supabase/client'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
 import BackButton from '@/components/BackButton'
@@ -13,12 +13,14 @@ function friendlyError(msg: string): string {
   return 'Something went wrong. Please try again.'
 }
 
-export default function LoginPage() {
+function LoginContent() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
   const router = useRouter()
+  const searchParams = useSearchParams()
+  const nextParam = searchParams.get('next')
   const supabase = createClient()
 
   useEffect(() => {
@@ -34,7 +36,11 @@ export default function LoginPage() {
         .eq('id', data.session.user.id)
         .single()
 
-      router.replace(profile?.role === 'admin' ? '/admin' : '/dashboard')
+      if (profile?.role === 'admin') {
+        router.replace('/admin')
+      } else {
+        router.replace(nextParam || '/dashboard')
+      }
     }
 
     void redirectAuthenticatedUser()
@@ -42,7 +48,7 @@ export default function LoginPage() {
     return () => {
       active = false
     }
-  }, [router, supabase])
+  }, [router, supabase, nextParam])
 
   const handleLogin = async () => {
     setError('')
@@ -71,7 +77,7 @@ export default function LoginPage() {
       }
     }
 
-    router.replace('/dashboard')
+    router.replace(nextParam || '/dashboard')
   }
 
   return (
@@ -139,5 +145,13 @@ export default function LoginPage() {
         </div>
       </div>
     </div>
+  )
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-charcoal" />}>
+      <LoginContent />
+    </Suspense>
   )
 }

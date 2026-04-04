@@ -64,16 +64,22 @@ export default function Navbar() {
             Home
           </Link>
           <Link
-            href="#accommodation"
+            href={user ? '/charities' : '/login?next=/charities'}
             className="text-white/80 hover:text-white transition-colors duration-300 uppercase text-xs font-medium"
           >
-            Accommodation
+            Charities
           </Link>
           <Link
-            href="#amenities"
+            href={user ? '/#how-it-works' : '/login?next=/#how-it-works'}
+            className="text-white/80 hover:text-white transition-colors duration-300 uppercase text-xs font-medium whitespace-nowrap"
+          >
+            How It Works
+          </Link>
+          <Link
+            href={user ? '/#prizes' : '/login?next=/#prizes'}
             className="text-white/80 hover:text-white transition-colors duration-300 uppercase text-xs font-medium"
           >
-            Facilities
+            Prizes
           </Link>
         </div>
 
@@ -146,9 +152,9 @@ export default function Navbar() {
       {menuOpen && (
         <div className="md:hidden bg-charcoal border-t border-white/10 px-6 py-6 space-y-4">
           <Link href="/" className="block text-sm text-white/80 uppercase tracking-wider" onClick={() => setMenuOpen(false)}>Home</Link>
-          <Link href="#accommodation" className="block text-sm text-white/80 uppercase tracking-wider" onClick={() => setMenuOpen(false)}>Accommodation</Link>
-          <Link href="#amenities" className="block text-sm text-white/80 uppercase tracking-wider" onClick={() => setMenuOpen(false)}>Facilities</Link>
-          <Link href="/charities" className="block text-sm text-white/80 uppercase tracking-wider" onClick={() => setMenuOpen(false)}>Charities</Link>
+          <Link href={user ? '/charities' : '/login?next=/charities'} className="block text-sm text-white/80 uppercase tracking-wider" onClick={() => setMenuOpen(false)}>Charities</Link>
+          <Link href={user ? '/#how-it-works' : '/login?next=/#how-it-works'} className="block text-sm text-white/80 uppercase tracking-wider" onClick={() => setMenuOpen(false)}>How It Works</Link>
+          <Link href={user ? '/#prizes' : '/login?next=/#prizes'} className="block text-sm text-white/80 uppercase tracking-wider" onClick={() => setMenuOpen(false)}>Prizes</Link>
         </div>
       )}
     </nav>
