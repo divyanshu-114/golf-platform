@@ -102,7 +102,7 @@ function LoginContent() {
         <div className="bg-charcoal/80 backdrop-blur-xl border border-white/10 rounded-2xl p-8 space-y-8 shadow-2xl">
           <div className="text-center space-y-3">
             <h1 className="font-heading text-3xl text-white tracking-wide">Welcome Back</h1>
-            <p className="text-cream/70 font-light">Sign in to your Almaris account</p>
+            <p className="text-cream/70 font-light">Sign in to your GolfGives account</p>
           </div>
           
           <div className="space-y-4">

@@ -35,10 +35,8 @@ export default function DashboardPage() {
         <div className="relative z-10 max-w-6xl mx-auto flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div>
             <p className="text-olive uppercase tracking-[0.3em] text-xs font-medium mb-3">Dashboard</p>
-            <h1 className="font-heading text-4xl md:text-5xl text-white">
-              Welcome back, {firstName}
-            </h1>
-            <p className="text-cream/70 mt-3 font-light">Here&apos;s your Almaris overview</p>
+            <h1 className="font-heading text-4xl text-cream tracking-wide">GolfGives</h1>
+            <p className="text-cream/70 mt-3 font-light">Here&apos;s your dashboard overview</p>
           </div>
           <div className="flex items-center gap-3">
             <div className={`flex items-center gap-2 px-4 py-2 text-xs font-medium uppercase tracking-wider border ${

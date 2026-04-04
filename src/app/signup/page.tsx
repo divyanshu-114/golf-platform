@@ -81,7 +81,7 @@ export default function SignupPage() {
         <div className="bg-charcoal/80 backdrop-blur-xl border border-white/10 rounded-2xl p-8 space-y-8 shadow-2xl">
           <div className="text-center space-y-3">
             <h1 className="font-heading text-3xl text-white tracking-wide">Create Account</h1>
-            <p className="text-cream/70 font-light">Join the Almaris community</p>
+            <p className="text-cream/70 font-light">Join the GolfGives community</p>
           </div>
           
           <div className="space-y-4">

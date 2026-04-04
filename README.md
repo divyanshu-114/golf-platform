@@ -1,6 +1,6 @@
-# Almaris Golf Resort & GolfGives Platform ⛳
+# GolfGives Platform ⛳
 
-Welcome to the **Almaris Golf Resort / GolfGives** codebase! This is a luxury, full-stack Next.js 16 application built to provide users with a high-end golf resort aesthetic while acting as a philanthropic prize draw platform. 
+Welcome to the **GolfGives** codebase! This is a luxury, full-stack Next.js 16 application built to provide users with a high-end golf resort aesthetic while acting as a philanthropic prize draw platform. 
 
 Users can subscribe to monthly plans, submit their golf scores, contribute a percentage of their subscription to their favorite charities, and enter into monthly tiered prize draws. 
 
@@ -100,4 +100,4 @@ This platform does not use generic default branding. It adheres to strict luxury
 
 ---
 
-*This project is uniquely designed for the Almaris Golf platform ecosystem.*
+*This project is uniquely designed for the GolfGives platform ecosystem.*
