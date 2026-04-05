@@ -5,7 +5,7 @@ import Link from 'next/link'
 
 export default function PrizeDrawSection() {
   return (
-    <section className="py-24 md:py-32 bg-charcoal text-cream overflow-hidden">
+    <section id="prizes" className="py-24 md:py-32 bg-charcoal text-cream overflow-hidden">
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex flex-col lg:flex-row items-center gap-16">
           

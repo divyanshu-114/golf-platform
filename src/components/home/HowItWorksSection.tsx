@@ -26,7 +26,7 @@ const steps = [
 
 export default function HowItWorksSection() {
   return (
-    <section className="py-24 md:py-32 bg-cream text-charcoal relative">
+    <section id="how-it-works" className="py-24 md:py-32 bg-cream text-charcoal relative">
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 md:mb-24 space-y-6">
           <motion.div 

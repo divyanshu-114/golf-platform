@@ -49,6 +49,14 @@ export async function middleware(request: NextRequest) {
         return NextResponse.redirect(new URL('/dashboard', request.url))
     }
 
+
+    // Prevent browser caching of protected routes for back button security
+    if (pathname.startsWith('/dashboard') || pathname.startsWith('/admin')) {
+        supabaseResponse.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0')
+        supabaseResponse.headers.set('Pragma', 'no-cache')
+        supabaseResponse.headers.set('Expires', '0')
+    }
+
     return supabaseResponse
 }
 
