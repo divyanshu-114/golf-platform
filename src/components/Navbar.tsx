@@ -40,7 +40,7 @@ export default function Navbar() {
     const supabase = createClient()
     await supabase.auth.signOut()
     setUser(null)
-    window.location.href = '/login'
+    window.location.href = '/'
   }
 
   const isDashboard = pathname?.startsWith('/dashboard')

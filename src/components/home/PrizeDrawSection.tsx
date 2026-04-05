@@ -2,8 +2,15 @@
 import { motion } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useDashboard } from '@/hooks/useDashboard'
 
 export default function PrizeDrawSection() {
+  const { data, loading } = useDashboard()
+  
+  const isActive = data?.subscription?.status === 'active'
+  const hasScores = data?.scores && data.scores.length > 0
+  const nextDrawMonth = new Date().toLocaleDateString('en-GB', { month: 'long' })
+
   return (
     <section id="prizes" className="py-24 md:py-32 bg-charcoal text-cream overflow-hidden">
       <div className="max-w-7xl mx-auto px-6">
@@ -43,12 +50,31 @@ export default function PrizeDrawSection() {
             </div>
 
             <div className="pt-4">
-              <Link 
-                href="/pricing"
-                className="inline-block bg-olive text-cream px-8 py-3 rounded-none text-sm uppercase tracking-wider hover:bg-[#7a8c54] transition-colors duration-300 border border-olive"
-              >
-                Join the Next Draw
-              </Link>
+              {loading ? (
+                <div className="inline-block bg-white/5 border border-white/10 px-8 py-3 rounded-none text-sm uppercase tracking-wider text-transparent animate-pulse">
+                  Loading status...
+                </div>
+              ) : isActive ? (
+                hasScores ? (
+                  <div className="inline-flex items-center gap-3 bg-olive/10 text-olive px-8 py-3 rounded-none text-sm uppercase tracking-wider border border-olive/30">
+                    <span>✓</span> You're Entered for {nextDrawMonth}
+                  </div>
+                ) : (
+                  <Link 
+                    href="/dashboard"
+                    className="inline-block bg-olive text-cream px-8 py-3 rounded-none text-sm uppercase tracking-wider hover:bg-[#7a8c54] transition-colors duration-300 border border-olive"
+                  >
+                    Submit Scores to Enter
+                  </Link>
+                )
+              ) : (
+                <Link 
+                  href="/pricing"
+                  className="inline-block bg-olive text-cream px-8 py-3 rounded-none text-sm uppercase tracking-wider hover:bg-[#7a8c54] transition-colors duration-300 border border-olive"
+                >
+                  Join the Next Draw
+                </Link>
+              )}
             </div>
           </motion.div>
 
