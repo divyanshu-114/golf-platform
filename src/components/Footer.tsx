@@ -16,8 +16,8 @@ export default function Footer() {
           <div className="text-center md:text-left">
             <h4 className="font-heading text-lg mb-4 tracking-wider">Address</h4>
             <p className="text-white/50 text-sm leading-relaxed">
-              742 Evergreen Terrace<br />
-              Brooklyn, NY 11201
+              Sonipat, Haryana<br />
+              India
             </p>
           </div>
 
@@ -63,8 +63,8 @@ export default function Footer() {
           <div className="text-center md:text-right">
             <h4 className="font-heading text-lg mb-4 tracking-wider">Contact Us</h4>
             <p className="text-white/50 text-sm leading-relaxed">
-              T. +929 333 9296<br />
-              M. contact@golfgives.com
+              6205978407<br />
+              divyanshu.singh.1879@gmail.com 
             </p>
           </div>
         </div>
