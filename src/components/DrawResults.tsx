@@ -40,7 +40,7 @@ export default function DrawResults({ userId }: { userId: string }) {
       <h2 className="font-heading text-xl text-charcoal border-b border-charcoal/5 pb-3">Recent Draws</h2>
 
       {draws.length === 0 ? (
-        <p className="text-charcoal/60 text-sm">No draws published yet.</p>
+        <p className="text-charcoal/60 text-sm">No draws published yet...</p>
       ) : (
         <div className="space-y-4">
           {draws.map(draw => {
