@@ -11,6 +11,7 @@ export default function CharityProfilePage() {
   const donated = searchParams.get('donated')
 
   const [charity, setCharity] = useState<{ name: string; description: string; is_featured: boolean; charity_events: { id: string; title: string; description: string; location: string; event_date: string }[] } | null>(null)
+  const [loadError, setLoadError] = useState(false)
   const [donationAmount, setDonationAmount] = useState('')
   const [selecting, setSelecting] = useState(false)
   const [donating, setDonating] = useState(false)
@@ -18,8 +19,15 @@ export default function CharityProfilePage() {
 
   useEffect(() => {
     fetch(`/api/charities/${id}`)
-      .then(r => r.json())
-      .then(d => setCharity(d.charity))
+      .then(r => {
+        if (!r.ok) throw new Error('Not found')
+        return r.json()
+      })
+      .then(d => {
+        if (!d.charity) throw new Error('Not found')
+        setCharity(d.charity)
+      })
+      .catch(() => setLoadError(true))
   }, [id])
 
   const handleSelect = async () => {
@@ -45,6 +53,13 @@ export default function CharityProfilePage() {
     const { url } = await res.json()
     window.location.href = url
   }
+
+  if (loadError) return (
+    <div className="flex flex-col justify-center items-center min-h-[50vh] bg-[#F9F8F3] gap-4">
+      <p className="text-charcoal font-heading text-xl">Charity not found.</p>
+      <a href="/charities" className="text-olive text-sm uppercase tracking-widest hover:underline">← Back to Charities</a>
+    </div>
+  )
 
   if (!charity) return (
     <div className="flex justify-center items-center min-h-[50vh] bg-[#F9F8F3]">

@@ -5,11 +5,12 @@ import Link from 'next/link'
 
 interface Props {
   charityName: string | null
+  charityId: string | null
   contributionPct: number
   userId: string
 }
 
-export default function CharityCard({ charityName, contributionPct, userId }: Props) {
+export default function CharityCard({ charityName, charityId, contributionPct, userId }: Props) {
   const [pct, setPct] = useState(contributionPct)
   const [saving, setSaving] = useState(false)
   const [saved, setSaved] = useState(false)
@@ -27,7 +28,7 @@ export default function CharityCard({ charityName, contributionPct, userId }: Pr
         Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({
-        charity_id: null, // Keep existing charity, just update pct
+        charity_id: charityId,
         contribution_pct: pct,
       }),
     })

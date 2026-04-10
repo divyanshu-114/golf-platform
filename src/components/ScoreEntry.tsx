@@ -116,7 +116,7 @@ export default function ScoreEntry() {
                   <div className="w-24 h-1 bg-charcoal/5 rounded-full overflow-hidden">
                     <div
                       className="h-full bg-olive rounded-full"
-                      style={{ width: `${(s.score / 54) * 100}%` }}
+                      style={{ width: `${(s.score / 45) * 100}%` }}
                     />
                   </div>
                   <button
@@ -139,8 +139,8 @@ export default function ScoreEntry() {
         <div className="grid grid-cols-2 gap-4">
           <input
             type="number"
-            min="0"
-            max="54"
+            min="1"
+            max="45"
             placeholder="Stableford Score"
             value={newScore}
             onChange={e => setNewScore(e.target.value)}

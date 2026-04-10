@@ -9,7 +9,9 @@ import BackButton from '@/components/BackButton'
 const ADMIN_EMAIL = process.env.NEXT_PUBLIC_ADMIN_EMAIL?.toLowerCase() ?? ''
 
 function friendlyError(msg: string): string {
-  if (msg.toLowerCase().includes('invalid')) return 'Invalid email or password.'
+  const lower = msg.toLowerCase()
+  if (lower.includes('invalid')) return 'Invalid email or password.'
+  if (lower.includes('email not confirmed')) return 'Please confirm your email before logging in. Check your inbox for a confirmation link.'
   return 'Something went wrong. Please try again.'
 }
 
@@ -21,6 +23,7 @@ function LoginContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const nextParam = searchParams.get('next')
+  const signupSuccess = searchParams.get('signup') === 'success'
   const supabase = createClient()
 
   useEffect(() => {
@@ -121,6 +124,12 @@ function LoginContent() {
               onChange={e => setPassword(e.target.value)}
             />
           </div>
+
+          {signupSuccess && (
+            <p className="text-green-300 text-sm bg-green-900/20 border border-green-500/20 p-3">
+              Account created! You can now sign in.
+            </p>
+          )}
 
           {error && (
             <p className="text-red-400 text-sm bg-red-900/20 border border-red-500/20 p-3">

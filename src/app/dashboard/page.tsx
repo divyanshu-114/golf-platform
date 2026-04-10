@@ -113,6 +113,7 @@ export default function DashboardPage() {
               <div className="p-2">
                 <CharityCard
                   charityName={data?.charity?.charities?.name ?? null}
+                  charityId={data?.charity?.charity_id ?? null}
                   contributionPct={data?.charity?.charity_contribution_pct ?? 10}
                   userId={data?.profile?.id ?? ''}
                 />

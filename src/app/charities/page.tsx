@@ -35,7 +35,12 @@ export default function CharitiesPage() {
   }, [search])
 
   const featured = charities.filter(c => c.is_featured)
-  const filtered = charities
+  const filtered = search
+    ? charities.filter(c =>
+        c.name.toLowerCase().includes(search.toLowerCase()) ||
+        c.description.toLowerCase().includes(search.toLowerCase())
+      )
+    : charities
 
   return (
     <div className="min-h-screen bg-[#F9F8F3]">
